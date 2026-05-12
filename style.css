@@ -682,6 +682,11 @@ body {
 .logo-icon-splash {
     display: inline-block;
     animation: rotateSlowly 8s linear infinite;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--gold-accent);
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    font-size: 2.2rem;
 }
 
 .splash-title {
@@ -770,6 +775,10 @@ body {
 
 .logo-icon {
     font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--gold-accent);
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
 }
 
 .logo-text {
@@ -3658,6 +3667,10 @@ body {
     font-size: 2.5rem;
     display: block;
     margin-bottom: 1rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--gold-accent);
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
 }
 
 .value-card {
