@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANCRIO 🇮🇳 - Premium Fashion & Accessories (India)</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+
+    <!-- PREMIUM ENTRANCE SPLASH SCREEN -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-background"></div>
+            <div class="splash-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            <div class="splash-logo">
+                <span class="logo-icon-splash">🇮🇳</span>
+            </div>
+            <h1 class="splash-title">ANCRIO</h1>
+            <p class="splash-subtitle">Premium Fashion & Accessories</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="nav-logo">
+                    <span class="logo-icon">🇮🇳</span>
+                    <span class="logo-text">ANCRIO</span>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-toggle">Categories <span>▾</span></button>
+                    <div class="nav-dropdown-menu">
+                        <a href="#" onclick="navigateTo('collections')">Anime</a>
+                        <a href="#" onclick="navigateTo('collections')">Gaming</a>
+                        <a href="#" onclick="navigateTo('collections')">Streetwear</a>
+                        <a href="#" onclick="navigateTo('collections')">Sneakers</a>
+                        <a href="#" onclick="navigateTo('collections')">Accessories</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-search-group">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search marketplace..." class="search-input">
+                    <button onclick="handleSearch()" class="search-btn">🔍</button>
+                </div>
+                <div class="search-suggestions">
+                    <button onclick="navigateTo('collections')">Anime Drops</button>
+                    <button onclick="navigateTo('collections')">Rare Sneakers</button>
+                    <button onclick="navigateTo('collections')">Gaming Gear</button>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <button class="seller-btn" onclick="navigateTo('seller-dashboard')">Seller Hub</button>
+                <button class="nav-icon-btn" onclick="navigateTo('wishlist')" title="Wishlist">
+                    <span class="icon">♡</span>
+                    <span class="badge" id="wishlistBadge">0</span>
+                </button>
+                <button class="nav-icon-btn" onclick="navigateTo('cart')" title="Shopping Cart">
+                    <span class="icon">🛍</span>
+                    <span class="badge" id="cartBadge">0</span>
+                </button>
+                <button class="nav-icon-btn" id="userBtn" onclick="openLoginModal()" title="Account">
+                    <span class="icon">👤</span>
+                </button>
+            </div>
+
+            <button class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <!-- MARKETPLACE HERO -->
+            <section class="marketplace-hero">
+                <div class="marketplace-hero__panel">
+                    <div class="hero-pill-row">
+                        <span class="hero-pill">Multi-Vendor</span>
+                        <span class="hero-pill">Luxury Drops</span>
+                        <span class="hero-pill">Anime x Gaming</span>
+                    </div>
+                    <h1 class="marketplace-title">ANCRIO Marketplace</h1>
+                    <p class="marketplace-copy">A premium dark-luxury marketplace for anime, streetwear, sneakers, gaming drops and collectible vendor storefronts.</p>
+
+                    <div class="hero-actions">
+                        <button class="btn-primary-large" onclick="navigateTo('shop')">Explore Marketplace</button>
+                        <button class="btn-secondary-large" onclick="navigateTo('seller-dashboard')">Become a Seller</button>
+
+                    <div class="hero-metrics">
+                        <div>
+                            <strong>48K+</strong>
+                            <span>Verified sellers</span>
+                        </div>
+                        <div>
+                            <strong>125K+</strong>
+                            <span>Curated listings</span>
+                        </div>
+                        <div>
+                            <strong>22M</strong>
+                            <span>Monthly views</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="marketplace-hero__visual">
+                    <div class="hero-visual-card">
+                        <div class="visual-badge">Premium Launch</div>
+                        <h2>Limited streetwear drops</h2>
+                        <p>Discover exclusive vendor collabs, collector editions, and premium drop experiences.</p>
+                        <div class="visual-stat-row">
+                            <span>Live bids</span>
+                            <strong>1.2K</strong>
+                        </div>
+                    </div>
+                    <div class="hero-mini-grid">
+                        <div class="mini-card">
+                            <span>Anime</span>
+                            <strong>12K+</strong>
+                        </div>
+                        <div class="mini-card">
+                            <span>Gaming</span>
+                            <strong>9K+</strong>
+                        </div>
+                        <div class="mini-card">
+                            <span>Streetwear</span>
+                            <strong>8.5K+</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="marketplace-hotbar">
+                <div class="hotbar-chip">Anime</div>
+                <div class="hotbar-chip">Gaming</div>
+                <div class="hotbar-chip">Streetwear</div>
+                <div class="hotbar-chip">Sneakers</div>
+                <div class="hotbar-chip">Accessories</div>
+                <div class="hotbar-chip">Posters</div>
+                <div class="hotbar-chip">Tech</div>
+            </section>
+
+            <!-- TRENDING CATEGORIES -->
+            <section class="trending-categories section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Trending Categories</h2>
+                        <p class="section-subtitle">Shop by culture, genre and premium marketplaces.</p>
+                    </div>
+                    <a href="#" onclick="navigateTo('collections')" class="view-all">See All Categories</a>
+                </div>
+                <div class="category-grid">
+                    <div class="category-card premium-category-card">
+                        <div class="category-icon">🌸</div>
+                        <h3>Anime</h3>
+                        <p>Epic collectibles and cosplay drops</p>
+                    </div>
+                    <div class="category-card premium-category-card">
+                        <div class="category-icon">🎮</div>
+                        <h3>Gaming</h3>
+                        <p>Exclusive gear, apparel and avatars</p>
+                    </div>
+                    <div class="category-card premium-category-card">
+                        <div class="category-icon">🧢</div>
+                        <h3>Streetwear</h3>
+                        <p>Luxury drops and urban essentials</p>
+                    </div>
+                    <div class="category-card premium-category-card">
+                        <div class="category-icon">👟</div>
+                        <h3>Sneakers</h3>
+                        <p>Limited edition kicks and collaborations</p>
+                    </div>
+                    <div class="category-card premium-category-card">
+                        <div class="category-icon">✨</div>
+                        <h3>Accessories</h3>
+                        <p>Bold jewelry, bags & curated add-ons</p>
+                    </div>
+                    <div class="category-card premium-category-card">
+                        <div class="category-icon">🖼️</div>
+                        <h3>Posters</h3>
+                        <p>Art, anime prints and wall statement pieces</p>
+                    </div>
+                    <div class="category-card premium-category-card">
+                        <div class="category-icon">🔌</div>
+                        <h3>Tech</h3>
+                        <p>Gadget drops for streamers and gamers</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FLASH DEALS SECTION -->
+            <section class="flash-deals section">
+                <div class="section-headline">
+                    <div>
+                        <span class="flash-label">FLASH DEALS</span>
+                        <h2 class="section-title">Lightning Drops</h2>
+                        <p>Deals refresh every hour across top sellers and limited stock.</p>
+                    </div>
+                    <div class="countdown-timer">
+                        <span>03</span><span>18</span><span>42</span>
+                    </div>
+                </div>
+                <div class="horizontal-scroll flash-slider">
+                    <div class="deal-card">
+                        <div class="deal-badge">-45%</div>
+                        <div class="deal-thumb">🎧</div>
+                        <h3>Cyber Soundset</h3>
+                        <p>Gaming audio pack from Tokyo vendor.</p>
+                        <strong>₹1,299</strong>
+                    </div>
+                    <div class="deal-card">
+                        <div class="deal-badge">-38%</div>
+                        <div class="deal-thumb">🎴</div>
+                        <h3>Anime Collector Tee</h3>
+                        <p>Limited run streetwear by Midnight Studio.</p>
+                        <strong>₹899</strong>
+                    </div>
+                    <div class="deal-card">
+                        <div class="deal-badge">-52%</div>
+                        <div class="deal-thumb">👾</div>
+                        <h3>Retro Arcade Hoodie</h3>
+                        <p>Exclusive drop from Urban Lab.</p>
+                        <strong>₹1,499</strong>
+                    </div>
+                    <div class="deal-card">
+                        <div class="deal-badge">-30%</div>
+                        <div class="deal-thumb">💨</div>
+                        <h3>Sneaker Glow Kit</h3>
+                        <p>Premium streetwear accessory pack.</p>
+                        <strong>₹599</strong>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FEATURED PRODUCTS -->
+            <section class="featured-products section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Featured Drops</h2>
+                        <p>Curated vendor collections selected by ANCRIO editors.</p>
+                    </div>
+                    <a href="#" onclick="navigateTo('shop')" class="view-all">Browse All Products</a>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card premium-product-card">
+                        <div class="product-image">
+                            <div class="hover-overlay"></div>
+                            <span>🎒</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">
+                                <span class="vendor-name">Tokyo Vault</span>
+                                <span class="discount-badge">-30%</span>
+                            </div>
+                            <h3 class="product-name">Neo Street Pack</h3>
+                            <div class="product-rating">★★★★☆ <span>(320)</span></div>
+                            <div class="product-price">
+                                <span>₹2,199</span>
+                                <small>₹3,149</small>
+                            </div>
+                            <div class="product-actions">
+                                <button>Add to Cart</button>
+                                <button class="wish-btn">♡</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card premium-product-card">
+                        <div class="product-image">
+                            <div class="hover-overlay"></div>
+                            <span>🖤</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">
+                                <span class="vendor-name">Midnight Forge</span>
+                                <span class="discount-badge">-25%</span>
+                            </div>
+                            <h3 class="product-name">Holo Armor Jacket</h3>
+                            <div class="product-rating">★★★★☆ <span>(210)</span></div>
+                            <div class="product-price">
+                                <span>₹4,199</span>
+                                <small>₹5,599</small>
+                            </div>
+                            <div class="product-actions">
+                                <button>Add to Cart</button>
+                                <button class="wish-btn">♡</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card premium-product-card">
+                        <div class="product-image">
+                            <div class="hover-overlay"></div>
+                            <span>🎮</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">
+                                <span class="vendor-name">Pixel Punks</span>
+                                <span class="discount-badge">-20%</span>
+                            </div>
+                            <h3 class="product-name">Core Gamer Hoodie</h3>
+                            <div class="product-rating">★★★★☆ <span>(460)</span></div>
+                            <div class="product-price">
+                                <span>₹1,799</span>
+                                <small>₹2,249</small>
+                            </div>
+                            <div class="product-actions">
+                                <button>Add to Cart</button>
+                                <button class="wish-btn">♡</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card premium-product-card">
+                        <div class="product-image">
+                            <div class="hover-overlay"></div>
+                            <span>👟</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">
+                                <span class="vendor-name">Sneak Vault</span>
+                                <span class="discount-badge">-18%</span>
+                            </div>
+                            <h3 class="product-name">Phantom Runner</h3>
+                            <div class="product-rating">★★★★☆ <span>(510)</span></div>
+                            <div class="product-price">
+                                <span>₹3,299</span>
+                                <small>₹4,049</small>
+                            </div>
+                            <div class="product-actions">
+                                <button>Add to Cart</button>
+                                <button class="wish-btn">♡</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MARKETPLACE ARCHITECTURE -->
+            <section class="marketplace-architecture section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Marketplace Architecture</h2>
+                        <p class="section-subtitle">Designed for sellers, admins, shoppers and a scalable multi-vendor future.</p>
+                    </div>
+                </div>
+                <div class="architecture-grid">
+                    <div class="architecture-card">
+                        <h3>Seller Dashboard</h3>
+                        <p>Vendor onboarding, inventory control, analytics and premium storefronts.</p>
+                    </div>
+                    <div class="architecture-card">
+                        <h3>Admin Control</h3>
+                        <p>Marketplace moderation, featured drops, flash sales and vendor management.</p>
+                    </div>
+                    <div class="architecture-card">
+                        <h3>Customer Accounts</h3>
+                        <p>Personalized recommendations, wishlist, order tracking and premium loyalty rewards.</p>
+                    </div>
+                    <div class="architecture-card">
+                        <h3>Multi-Vendor Products</h3>
+                        <p>Vendor catalogs, collection tags, ratings and unified cart experience.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SELLER DASHBOARD PREVIEW -->
+            <section class="seller-dashboard-preview section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Seller Dashboard Preview</h2>
+                        <p class="section-subtitle">Premium vendor analytics, order control and growth tools for the ANCRIO marketplace.</p>
+                    </div>
+<button class="seller-cta" onclick="navigateTo('seller-dashboard')">Become a Seller</button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-main-card dashboard-card">
+                        <div class="dashboard-card-head">
+                            <div>
+                                <span class="dashboard-label">Total Earnings</span>
+                                <h3>₹18.4L</h3>
+                            </div>
+                            <span class="dashboard-pill">Live</span>
+                        </div>
+                        <div class="dashboard-stats-row">
+                            <div class="dashboard-small-card">
+                                <span>Total Orders</span>
+                                <strong>3,240</strong>
+                            </div>
+                            <div class="dashboard-small-card">
+                                <span>Product Uploads</span>
+                                <strong>128</strong>
+                            </div>
+                            <div class="dashboard-small-card">
+                                <span>Store Followers</span>
+                                <strong>21.2K</strong>
+                            </div>
+                        </div>
+                        <div class="analytics-panel">
+                            <div class="analytics-header">
+                                <div>
+                                    <span class="dashboard-label">Monthly Revenue</span>
+                                    <h4>₹4.2L</h4>
+                                </div>
+                                <span class="analytics-change">+24.8%</span>
+                            </div>
+                            <div class="analytics-chart">
+                                <span style="--level:0.35"></span>
+                                <span style="--level:0.55"></span>
+                                <span style="--level:0.7"></span>
+                                <span style="--level:0.5"></span>
+                                <span style="--level:0.9"></span>
+                                <span style="--level:0.65"></span>
+                                <span style="--level:0.8"></span>
+                            </div>
+                            <div class="analytics-meta-row">
+                                <div><strong>Pending Orders</strong><span>68</span></div>
+                                <div><strong>Notifications</strong><span>12</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-side-cards">
+                        <div class="dashboard-card notification-card">
+                            <div class="dashboard-card-head">
+                                <span class="dashboard-label">Notifications</span>
+                                <span class="notification-badge">12</span>
+                            </div>
+                            <div class="notification-list">
+                                <div>New seller application approved</div>
+                                <div>Flash drop ready in 2 hours</div>
+                                <div>Inventory low for Phantom Runner</div>
+                            </div>
+                        </div>
+                        <div class="dashboard-card features-card">
+                            <span class="dashboard-label">Seller Feature Highlights</span>
+                            <div class="feature-list">
+                                <div class="feature-pill">Upload Products</div>
+                                <div class="feature-pill">Earn Commissions</div>
+                                <div class="feature-pill">Manage Orders</div>
+                                <div class="feature-pill">Track Analytics</div>
+                                <div class="feature-pill">Featured Promotions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOP SELLERS SECTION -->
+            <section class="top-sellers section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Top Sellers</h2>
+                        <p>High-performance boutiques driving premium marketplace traffic.</p>
+                    </div>
+                    <a href="#" onclick="navigateTo('shop')" class="view-all">View Seller Hubs</a>
+                </div>
+                <div class="seller-grid">
+                    <div class="seller-card">
+                        <div class="seller-banner">AN</div>
+                        <div class="seller-content">
+                            <h3>Tokyo Vault</h3>
+                            <p>Anime streetwear and collectible drops.</p>
+                            <div class="seller-stats">
+                                <span>4.9 ★</span>
+                                <span>18.4K followers</span>
+                                <span>120 products</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="seller-card">
+                        <div class="seller-banner">GX</div>
+                        <div class="seller-content">
+                            <h3>Galactic X</h3>
+                            <p>Premium gaming apparel and limited gear.</p>
+                            <div class="seller-stats">
+                                <span>4.8 ★</span>
+                                <span>14.2K followers</span>
+                                <span>98 products</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="seller-card">
+                        <div class="seller-banner">SV</div>
+                        <div class="seller-content">
+                            <h3>Sneak Vault</h3>
+                            <p>Rare kicks and premium sneaker drops.</p>
+                            <div class="seller-stats">
+                                <span>4.9 ★</span>
+                                <span>16.9K followers</span>
+                                <span>84 products</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="seller-card">
+                        <div class="seller-banner">MN</div>
+                        <div class="seller-content">
+                            <h3>Midnight Forge</h3>
+                            <p>Luxury streetwear and collectible fashion.</p>
+                            <div class="seller-stats">
+                                <span>4.7 ★</span>
+                                <span>11.3K followers</span>
+                                <span>76 products</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RECOMMENDED PRODUCTS -->
+            <section class="recommended-products section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Recommended for You</h2>
+                        <p>AI-powered product suggestions based on the latest marketplace trends.</p>
+                    </div>
+                    <a href="#" onclick="navigateTo('shop')" class="view-all">Explore Recommendations</a>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card recommended-card">
+                        <div class="product-image"><span>🛡️</span></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Specter Armor Tee</h3>
+                            <div class="product-meta"><span class="vendor-name">Ghostline</span><span class="discount-badge">-28%</span></div>
+                            <div class="product-price"><span>₹1,199</span><small>₹1,669</small></div>
+                        </div>
+                    </div>
+                    <div class="product-card recommended-card">
+                        <div class="product-image"><span>🧬</span></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Neo Synth Jacket</h3>
+                            <div class="product-meta"><span class="vendor-name">Circuit Threads</span><span class="discount-badge">-22%</span></div>
+                            <div class="product-price"><span>₹2,499</span><small>₹3,199</small></div>
+                        </div>
+                    </div>
+                    <div class="product-card recommended-card">
+                        <div class="product-image"><span>🕶️</span></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Shadow Runner Cap</h3>
+                            <div class="product-meta"><span class="vendor-name">Night Shift</span><span class="discount-badge">-15%</span></div>
+                            <div class="product-price"><span>₹749</span><small>₹879</small></div>
+                        </div>
+                    </div>
+                    <div class="product-card recommended-card">
+                        <div class="product-image"><span>📱</span></div>
+                        <div class="product-info">
+                            <h3 class="product-name">Streamer Desk Kit</h3>
+                            <div class="product-meta"><span class="vendor-name">Pulse Labs</span><span class="discount-badge">-34%</span></div>
+                            <div class="product-price"><span>₹3,499</span><small>₹5,299</small></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW ARRIVALS SECTION -->
+            <section class="new-arrivals section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">New Arrivals</h2>
+                        <p>Fresh drops from top vendors and limited edition releases.</p>
+                    </div>
+                    <a href="#" onclick="navigateTo('new-arrivals')" class="view-all">See New Arrivals</a>
+                </div>
+                <div class="horizontal-scroll arrivals-slider" id="newArrivalsGrid"></div>
+            </section>
+
+            <!-- GAMING & ANIME COLLECTIONS -->
+            <section class="collection-showcase section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Gaming & Anime Collections</h2>
+                        <p>Immersive banners for the latest curated collections.</p>
+                    </div>
+                    <a href="#" onclick="navigateTo('collections')" class="view-all">View Collections</a>
+                </div>
+                <div class="collection-grid">
+                    <div class="collection-card collection-card--anime">
+                        <div class="collection-overlay"></div>
+                        <h3>Otaku Street</h3>
+                        <p>Bold anime fashion and character drops.</p>
+                    </div>
+                    <div class="collection-card collection-card--gaming">
+                        <div class="collection-overlay"></div>
+                        <h3>Battle Ready</h3>
+                        <p>Gaming-inspired apparel, limited accessories and gear.</p>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Our Story Page -->
+        <section id="story" class="page">
+            <div class="story-container">
+                <div class="story-header">
+                    <h1>🇮🇳 Our Story</h1>
+                    <p class="story-subtitle">Made in India, Worn with Pride | Discover the journey behind ANCRIO</p>
+                </div>
+
+                <div class="story-content">
+                    <div class="story-section">
+                        <h2>✨ Who We Are</h2>
+                        <p>ANCRIO 🇮🇳 is a premium Indian fashion and accessories brand dedicated to bringing high-quality, trendy styles to fashion enthusiasts aged 14-30. We're proud to be an Indian brand, creating fashion that resonates with Indian culture and global trends.</p>
+                    </div>
+
+                    <div class="story-section">
+                        <h2>🎯 Our Mission</h2>
+                        <p>Our mission is to make premium Indian fashion accessible and affordable for everyone across India. We curate the finest collections of t-shirts, hoodies, jackets, accessories, and lifestyle products that celebrate Indian youth and modern lifestyle.</p>
+                    </div>
+
+                    <div class="story-section">
+                        <h2>💡 Our Values</h2>
+                        <div class="values-grid">
+                            <div class="value-card">
+                                <span class="value-icon">🇮🇳</span>
+                                <h3>Indian Pride</h3>
+                                <p>Celebrating Indian culture and heritage in every design</p>
+                            </div>
+                            <div class="value-card">
+                                <span class="value-icon">👕</span>
+                                <h3>Quality First</h3>
+                                <p>Every product meets Indian excellence standards</p>
+                            </div>
+                            <div class="value-card">
+                                <span class="value-icon">💚</span>
+                                <h3>Sustainability</h3>
+                                <p>We care about the environment and ethical production</p>
+                            </div>
+                            <div class="value-card">
+                                <span class="value-icon">🤝</span>
+                                <h3>Community</h3>
+                                <p>Building a community of fashion lovers and trendsetters</p>
+                            </div>
+                            <div class="value-card">
+                                <span class="value-icon">🌟</span>
+                                <h3>Innovation</h3>
+                                <p>Constantly bringing new and exciting styles to our collection</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-section">
+                        <h2>📊 By The Numbers</h2>
+                        <div class="stats-grid">
+                            <div class="stat">
+                                <h3>50K+</h3>
+                                <p>Happy Customers</p>
+                            </div>
+                            <div class="stat">
+                                <h3>500+</h3>
+                                <p>Products Available</p>
+                            </div>
+                            <div class="stat">
+                                <h3>100K+</h3>
+                                <p>Units Sold</p>
+                            </div>
+                            <div class="stat">
+                                <h3>4.8★</h3>
+                                <p>Average Rating</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-section">
+                        <h2>🌍 Why Choose ANCRIO?</h2>
+                        <ul class="why-choose-list">
+                            <li>✓ Premium quality at affordable prices</li>
+                            <li>✓ Trendy designs for teens and young adults</li>
+                            <li>✓ Fast and reliable delivery</li>
+                            <li>✓ 30-day hassle-free returns</li>
+                            <li>✓ 24/7 customer support</li>
+                            <li>✓ Secure payment options</li>
+                            <li>✓ Exclusive collections and limited editions</li>
+                            <li>✓ Sustainable and ethical practices</li>
+                        </ul>
+                    </div>
+
+                    <div class="story-section">
+                        <h2>📞 Get In Touch</h2>
+                        <p>Have questions or feedback? We'd love to hear from you!</p>
+                        <div class="contact-links">
+                            <a href="#" onclick="openWhatsAppChat(); return false;" class="contact-btn">
+                                <span>💬</span> WhatsApp Us
+                            </a>
+                            <a href="mailto:info@ancrio.com" class="contact-btn">
+                                <span>📧</span> Email Us
+                            </a>
+                            <a href="tel:+919279559939" class="contact-btn">
+                                <span>📞</span> Call Us
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop Page -->
+        <section id="shop" class="page">
+            <div class="shop-header">
+                <h2>Shop All Products</h2>
+                <p>Browse our complete collection - all items in one place</p>
+            </div>
+            <div class="shop-container">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar">
+                    <h3 class="filters-title">🔍 Filters</h3>
+                    
+                    <div class="filter-group">
+                        <h4 class="filter-heading">Category</h4>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" value="all" onchange="filterProducts()"> ✓ All Products
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" value="t-shirts" onchange="filterProducts()"> 👕 T-Shirts
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" value="hoodies" onchange="filterProducts()"> 🧥 Hoodies
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" value="jackets" onchange="filterProducts()"> 🕴️ Jackets
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" value="accessories" onchange="filterProducts()"> ⌚ Accessories
+                        </label>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4 class="filter-heading">Price Range (₹)</h4>
+                        <div class="price-filter">
+                            <label>
+                                Min: ₹<input type="number" id="minPrice" value="0" onchange="filterProducts()">
+                            </label>
+                            <label>
+                                Max: ₹<input type="number" id="maxPrice" value="5000" onchange="filterProducts()">
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="reset-filter-btn" onclick="resetFilters()">↻ Reset Filters</button>
+                </aside>
+
+                <!-- Products Grid -->
+                <div class="shop-content">
+                    <div id="shopGrid" class="products-grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Arrivals Page -->
+        <section id="new-arrivals" class="page">
+            <h2 class="page-title">New Arrivals</h2>
+            <div id="newArrivalsPageGrid" class="products-grid"></div>
+        </section>
+
+        <!-- Collections Page -->
+        <section id="collections" class="page">
+            <h2 class="page-title">Collections</h2>
+            <div class="collections-grid">
+                <div class="collection-card" onclick="filterByCollection('casual')">
+                    <div class="collection-image">Casual</div>
+                    <h3>Casual Wear</h3>
+                </div>
+                <div class="collection-card" onclick="filterByCollection('formal')">
+                    <div class="collection-image">Formal</div>
+                    <h3>Formal Wear</h3>
+                </div>
+                <div class="collection-card" onclick="filterByCollection('sporty')">
+                    <div class="collection-image">Sporty</div>
+                    <h3>Sporty Collection</h3>
+                </div>
+                <div class="collection-card" onclick="filterByCollection('premium')">
+                    <div class="collection-image">Premium</div>
+                    <h3>Premium Line</h3>
+                </div>
+            </div>
+            <div id="collectionGrid" class="products-grid" style="margin-top: 2rem;"></div>
+        </section>
+
+        <!-- Seller Dashboard Page -->
+        <section id="seller-dashboard" class="page">
+            <div class="seller-dashboard-page">
+                <aside class="seller-sidebar">
+                    <div class="seller-brand">
+                        <div class="seller-brandmark">AN</div>
+                        <div>
+                            <h2>ANCRIO Seller</h2>
+                            <p>Vendor HQ for the multi-vendor marketplace</p>
+                        </div>
+                    </div>
+                    <nav class="seller-menu">
+                        <button class="seller-menu-item active" data-panel="dashboard" onclick="showSellerPanel('dashboard')">Dashboard</button>
+                        <button class="seller-menu-item" data-panel="products" onclick="showSellerPanel('products')">Products</button>
+                        <button class="seller-menu-item" data-panel="upload" onclick="showSellerPanel('upload')">Upload Product</button>
+                        <button class="seller-menu-item" data-panel="orders" onclick="showSellerPanel('orders')">Orders</button>
+                        <button class="seller-menu-item" data-panel="analytics" onclick="showSellerPanel('analytics')">Analytics</button>
+                        <button class="seller-menu-item" data-panel="earnings" onclick="showSellerPanel('earnings')">Earnings</button>
+                        <button class="seller-menu-item" data-panel="customers" onclick="showSellerPanel('customers')">Customers</button>
+                        <button class="seller-menu-item" data-panel="settings" onclick="showSellerPanel('settings')">Store Settings</button>
+                    </nav>
+                    <div class="sidebar-footer">
+                        <button class="seller-logout" onclick="navigateTo('home')">Logout</button>
+                    </div>
+                </aside>
+                <div class="seller-main">
+                    <div id="seller-panel-dashboard" class="seller-panel active">
+                        <div class="dashboard-top-row">
+                            <div class="dashboard-card">
+                                <div class="dashboard-card-head"><span>Total Sales</span><span>Live</span></div>
+                                <h3>₹24.8L</h3>
+                                <p>Weekly growth +14.3%</p>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="dashboard-card-head"><span>Total Orders</span><span>Today</span></div>
+                                <h3>4,210</h3>
+                                <p>12 new orders since yesterday</p>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="dashboard-card-head"><span>Revenue</span><span>Monthly</span></div>
+                                <h3>₹9.4L</h3>
+                                <p>Target completion 82%</p>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="dashboard-card-head"><span>Followers</span><span>Store</span></div>
+                                <h3>29.6K</h3>
+                                <p>High engagement on featured drops</p>
+                            </div>
+                        </div>
+                        <div class="dashboard-middle-row">
+                            <div class="analytics-card">
+                                <div class="dashboard-card-head">
+                                    <div>
+                                        <span class="dashboard-label">Monthly Revenue</span>
+                                        <h3>Revenue trend</h3>
+                                    </div>
+                                    <span class="analytics-pill">+18.9%</span>
+                                </div>
+                                <div class="analytics-graph">
+                                    <span style="--value:0.26"></span>
+                                    <span style="--value:0.45"></span>
+                                    <span style="--value:0.6"></span>
+                                    <span style="--value:0.52"></span>
+                                    <span style="--value:0.78"></span>
+                                    <span style="--value:0.68"></span>
+                                    <span style="--value:0.88"></span>
+                                </div>
+                                <div class="analytics-legend">
+                                    <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span>
+                                </div>
+                            </div>
+                            <div class="seller-summary-grid">
+                                <div class="summary-card">
+                                    <span class="summary-title">Product uploads</span>
+                                    <strong>128</strong>
+                                </div>
+                                <div class="summary-card">
+                                    <span class="summary-title">Pending orders</span>
+                                    <strong>68</strong>
+                                </div>
+                                <div class="summary-card">
+                                    <span class="summary-title">Store followers</span>
+                                    <strong>29.6K</strong>
+                                </div>
+                                <div class="summary-card">
+                                    <span class="summary-title">Notifications</span>
+                                    <strong>12</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-bottom-row">
+                            <div class="recent-orders-card">
+                                <div class="panel-title-row">
+                                    <h3>Recent Orders</h3>
+                                    <button class="mini-btn" onclick="showSellerPanel('orders')">View all</button>
+                                </div>
+                                <div id="sellerRecentOrders" class="recent-orders-list"></div>
+                            </div>
+                            <div class="notifications-card">
+                                <div class="panel-title-row">
+                                    <h3>Notifications</h3>
+                                    <button class="mini-btn" onclick="showSellerPanel('settings')">Manage</button>
+                                </div>
+                                <div id="sellerNotificationsList" class="notifications-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="seller-panel-products" class="seller-panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Product Library</h2>
+                                <p>Manage your storefront inventory and live catalog.</p>
+                            </div>
+                            <button class="seller-cta" onclick="showSellerPanel('upload')">Upload New Product</button>
+                        </div>
+                        <div class="product-table-wrapper">
+                            <table class="product-table">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Product</th>
+                                        <th>Stock</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sellerProductsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="seller-panel-upload" class="seller-panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Upload Product</h2>
+                                <p>List a new product with variants, pricing and images.</p>
+                            </div>
+                        </div>
+                        <form id="sellerProductForm" class="upload-form" onsubmit="saveSellerProduct(event)">
+                            <div class="field-grid">
+                                <label>
+                                    Product Title
+                                    <input type="text" id="sellerProductTitle" placeholder="Enter product title" required>
+                                </label>
+                                <label>
+                                    Price (₹)
+                                    <input type="number" id="sellerProductPrice" placeholder="Price" required>
+                                </label>
+                                <label>
+                                    Discount (%)
+                                    <input type="number" id="sellerProductDiscount" min="0" max="100" placeholder="Discount">
+                                </label>
+                                <label>
+                                    Stock
+                                    <input type="number" id="sellerProductStock" placeholder="Stock quantity" required>
+                                </label>
+                                <label>
+                                    Category
+                                    <select id="sellerProductCategory" required>
+                                        <option value="anime">Anime</option>
+                                        <option value="gaming">Gaming</option>
+                                        <option value="streetwear">Streetwear</option>
+                                        <option value="sneakers">Sneakers</option>
+                                        <option value="accessories">Accessories</option>
+                                        <option value="tech">Tech</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    Variants
+                                    <input type="text" id="sellerProductVariants" placeholder="Sizes, colors, options">
+                                </label>
+                            </div>
+                            <label class="full-width-field">
+                                Description
+                                <textarea id="sellerProductDescription" placeholder="Product description" rows="4" required></textarea>
+                            </label>
+                            <label class="full-width-field">
+                                Upload Images
+                                <input type="file" id="sellerProductImages" multiple accept="image/*" onchange="handleSellerImageUpload(event)">
+                            </label>
+                            <div id="sellerImagePreview" class="image-preview-thumbnails"></div>
+                            <input type="hidden" id="sellerProductImagesData">
+                            <button type="submit" class="btn-primary-large">Save Product</button>
+                        </form>
+                    </div>
+                    <div id="seller-panel-orders" class="seller-panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Orders</h2>
+                                <p>Track customer requests, fulfillment and shipping status.</p>
+                            </div>
+                        </div>
+                        <div id="sellerOrdersList" class="recent-orders-list"></div>
+                    </div>
+                    <div id="seller-panel-analytics" class="seller-panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Analytics</h2>
+                                <p>Performance metrics for your seller storefront.</p>
+                            </div>
+                        </div>
+                        <div class="analytics-grid">
+                            <div class="analytics-metric-card"><span>Daily Views</span><strong>12.4K</strong></div>
+                            <div class="analytics-metric-card"><span>Conversion</span><strong>7.8%</strong></div>
+                            <div class="analytics-metric-card"><span>Average Order</span><strong>₹1,464</strong></div>
+                            <div class="analytics-metric-card"><span>Return Rate</span><strong>2.1%</strong></div>
+                        </div>
+                        <div class="analytics-detail-card">
+                            <span class="dashboard-label">Sales Velocity</span>
+                            <div class="analytics-graph analytics-graph--wide">
+                                <span style="--value:0.3"></span>
+                                <span style="--value:0.5"></span>
+                                <span style="--value:0.7"></span>
+                                <span style="--value:0.6"></span>
+                                <span style="--value:0.9"></span>
+                                <span style="--value:0.8"></span>
+                            </div>
+                            <div class="analytics-legend"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+                        </div>
+                    </div>
+                    <div id="seller-panel-earnings" class="seller-panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Earnings</h2>
+                                <p>Revenue, payouts and fee breakdowns for your store.</p>
+                            </div>
+                        </div>
+                        <div class="earnings-grid">
+                            <div class="earnings-card"><span>Monthly Payouts</span><strong>₹5.2L</strong></div>
+                            <div class="earnings-card"><span>Pending Balance</span><strong>₹86K</strong></div>
+                            <div class="earnings-card"><span>Commission Rate</span><strong>12%</strong></div>
+                            <div class="earnings-card"><span>Last Payout</span><strong>₹1.1L</strong></div>
+                        </div>
+                        <div class="earnings-summary-card">
+                            <p>Next payout scheduled in <strong>3 days</strong>. Keep featured products updated to maximize revenue.</p>
+                        </div>
+                    </div>
+                    <div id="seller-panel-customers" class="seller-panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Customers</h2>
+                                <p>Top buyers and customer interaction metrics.</p>
+                            </div>
+                        </div>
+                        <div class="customers-grid">
+                            <div class="customer-card"><strong>Riya K.</strong><span>5 orders</span></div>
+                            <div class="customer-card"><strong>Vikram S.</strong><span>4 orders</span></div>
+                            <div class="customer-card"><strong>Neha P.</strong><span>3 orders</span></div>
+                            <div class="customer-card"><strong>Arjun M.</strong><span>3 orders</span></div>
+                        </div>
+                    </div>
+                    <div id="seller-panel-settings" class="seller-panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Store Settings</h2>
+                                <p>Configure storefront details and notification preferences.</p>
+                            </div>
+                        </div>
+                        <div class="settings-grid">
+                            <div class="settings-card"><h3>Store info</h3><p>Edit store name, description and visuals.</p></div>
+                            <div class="settings-card"><h3>Payout settings</h3><p>Update payment accounts and payout cycles.</p></div>
+                            <div class="settings-card"><h3>Notifications</h3><p>Enable alerts for new orders and product reviews.</p></div>
+                            <div class="settings-card"><h3>Security</h3><p>Manage access, passwords and seller permissions.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Detail Page -->
+        <section id="product-detail" class="page">
+            <div class="product-detail-container">
+                <div class="product-detail-image">
+                    <img id="detailImage" src="" alt="Product">
+                    <div id="detailImageAlt" class="detail-image-alt" style="display:none;"></div>
+                </div>
+                <div class="product-detail-info">
+                    <h1 id="detailName"></h1>
+                    <div class="rating-section">
+                        <div id="detailRating" class="stars"></div>
+                        <span id="detailReviewCount" class="review-count"></span>
+                    </div>
+                    <div class="price-section">
+                        <span id="detailPrice" class="price"></span>
+                        <span id="detailOriginalPrice" class="original-price"></span>
+                        <span id="detailDiscount" class="discount-badge"></span>
+                    </div>
+                    <p id="detailDescription" class="description"></p>
+                    
+                    <div class="size-selector">
+                        <label>Size:</label>
+                        <div id="sizeOptions" class="size-options"></div>
+                    </div>
+
+                    <div class="quantity-selector">
+                        <label>Quantity:</label>
+                        <div class="quantity-controls">
+                            <button onclick="decreaseQuantity()">−</button>
+                            <input type="number" id="quantity" value="1" min="1" readonly>
+                            <button onclick="increaseQuantity()">+</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-add-cart" onclick="buyNow()">🛒 Buy Now</button>
+                        <button class="btn-add-cart secondary" onclick="addToCart()">Add to Cart</button>
+                        <button class="btn-wishlist" id="wishlistBtn" onclick="toggleWishlist()">♡ Wishlist</button>
+                    </div>
+
+                    <div class="trust-info">
+                        <p>✓ 100% Authentic</p>
+                        <p>✓ Secure Payment</p>
+                        <p>✓ 30-Day Returns</p>
+                    </div>
+                </div>
+            <!-- Related Products -->
+            <section class="related-products">
+                <h3>Related Products</h3>
+                <div id="relatedProducts" class="products-grid"></div>
+            </section>
+        </section>
+
+        <!-- Cart Page -->
+        <section id="cart" class="page">
+            <h2 class="page-title">Shopping Cart</h2>
+            <div class="cart-container">
+                <div class="cart-items">
+                    <div id="cartItemsList"></div>
+                </div>
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span id="shipping">Free</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="total">$0.00</span>
+                    </div>
+                    <button class="btn-checkout" onclick="checkout()">Proceed to Checkout</button>
+                    <button class="btn-continue-shopping" onclick="navigateTo('shop')">Continue Shopping</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wishlist Page -->
+        <section id="wishlist" class="page">
+            <h2 class="page-title">My Wishlist</h2>
+            <div id="wishlistGrid" class="products-grid"></div>
+        </section>
+
+        <!-- User Account Page -->
+        <section id="account" class="page">
+            <div class="account-container">
+                <div class="account-header">
+                    <h2>My Account</h2>
+                    <button class="btn-logout" onclick="logout()">Logout</button>
+                </div>
+
+                <div class="account-tabs">
+                    <button class="tab-btn active" onclick="switchTab('profile')">Profile</button>
+                    <button class="tab-btn" onclick="switchTab('orders')">Order History</button>
+                </div>
+
+                <div id="profileTab" class="tab-content active">
+                    <h3>Profile Information</h3>
+                    <div class="profile-info">
+                        <div class="info-row">
+                            <label>Name:</label>
+                            <span id="userName"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Email:</label>
+                            <span id="userEmail"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Member Since:</label>
+                            <span id="userJoined"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ordersTab" class="tab-content">
+                    <h3>Order History</h3>
+                    <div id="ordersList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Panel -->
+        <section id="admin" class="page">
+            <div class="admin-panel">
+                <aside class="admin-sidebar">
+                    <h3 class="admin-title">ADMIN PANEL</h3>
+                    <nav class="admin-nav">
+                        <button class="admin-nav-btn active" onclick="switchAdminTab('dashboard')">📊 Dashboard</button>
+                        <button class="admin-nav-btn" onclick="switchAdminTab('products')">📦 Products</button>
+                        <button class="admin-nav-btn" onclick="switchAdminTab('offers')">🎁 Offers & Discounts</button>
+                        <button class="admin-nav-btn" onclick="switchAdminTab('returns')">🔄 Return/Replace</button>
+                        <button class="admin-nav-btn" onclick="switchAdminTab('vendors')">🏪 Vendor Management</button>
+                    </nav>
+                    <button class="btn-logout" onclick="exitAdminPanel()">Exit Admin</button>
+                </aside>
+
+                <div class="admin-content">
+                    <!-- Dashboard Tab -->
+                    <div id="dashboardTab" class="admin-tab active">
+                        <h3>📊 Admin Dashboard</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h4>Total Products</h4>
+                                <p id="statProducts" class="stat-value">0</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Total Orders</h4>
+                                <p id="statOrders" class="stat-value">0</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Total Revenue</h4>
+                                <p id="statRevenue" class="stat-value">$0.00</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Total Users</h4>
+                                <p id="statUsers" class="stat-value">0</p>
+                            </div>
+                        </div>
+
+                        <!-- Orders Section in Dashboard -->
+                        <div style="margin-top: 2rem; border-top: 2px solid rgba(212,175,55,0.3); padding-top: 2rem;">
+                            <h3 style="color: var(--gold-accent); margin-bottom: 1.5rem;">📦 Live Orders & Customer Details</h3>
+                            <div id="dashboardOrdersList" style="display: grid; gap: 1.5rem;"></div>
+                        </div>
+
+                        <!-- Return Requests Section -->
+                        <div id="returnRequestsContainer" style="margin-top: 3rem; border-top: 3px solid rgba(139, 92, 246, 0.5); padding-top: 2rem; display: none;"></div>
+                    </div>
+
+                    <!-- Products Tab -->
+                    <div id="productsTab" class="admin-tab">
+                        <h3>Manage Products</h3>
+                        
+                        <!-- Discount Calculator -->
+                        <div class="discount-calculator">
+                            <h4>💰 Discount Calculator</h4>
+                            <div class="calc-inputs">
+                                <div class="calc-field">
+                                    <label>Actual Price:</label>
+                                    <input type="number" id="calcActualPrice" placeholder="₹0" oninput="calculateDiscount()">
+                                </div>
+                                <div class="calc-field">
+                                    <label>Discount Price:</label>
+                                    <input type="number" id="calcDiscountPrice" placeholder="₹0" oninput="calculateDiscount()">
+                                </div>
+                            </div>
+                            <div class="calc-results">
+                                <div class="result-box">
+                                    <div class="result-label">Discount %</div>
+                                    <div class="result-value" id="calcPercentage">0%</div>
+                                </div>
+                                <div class="result-box">
+                                    <div class="result-label">Customer Saves</div>
+                                    <div class="result-value" id="calcSavings">₹0</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-add-product" onclick="toggleProductForm()">+ Add New Product</button>
+                        
+                        <div id="productForm" class="product-form" style="display: none;">
+                            <h4>Add/Edit Product</h4>
+                            <input type="hidden" id="productFormId">
+                            <div class="form-group">
+                                <label>Product Name:</label>
+                                <input type="text" id="formName" placeholder="Product name">
+                            </div>
+                            <div class="form-group">
+                                <label>Category:</label>
+                                <select id="formCategory">
+                                    <option value="t-shirts">T-Shirts</option>
+                                    <option value="hoodies">Hoodies</option>
+                                    <option value="jackets">Jackets</option>
+                                    <option value="accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Actual Price (Before Discount):</label>
+                                <input type="number" id="formPrice" placeholder="Price">
+                            </div>
+                            <div class="form-group">
+                                <label>Sale Price (After Discount):</label>
+                                <input type="number" id="formSalePrice" placeholder="Discounted price" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Description:</label>
+                                <textarea id="formDescription" placeholder="Product description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Product Images (2-6 images):</label>
+                                <input type="file" id="formImageFile" multiple accept="image/*" onchange="handleImageFileChange(event)">
+                                <div id="formImagePreview" class="image-preview-thumbnails"></div>
+                                <input type="hidden" id="formImageData">
+                            </div>
+                            <div class="form-group">
+                                <label>Stock:</label>
+                                <input type="number" id="formStock" placeholder="Stock quantity">
+                            </div>
+                            <div class="form-group">
+                                <label>📋 Return Policy:</label>
+                                <select id="formReturnPolicy">
+                                    <option value="No returns allowed">❌ No Returns Allowed</option>
+                                    <option value="30 days return and refund">✅ 30 days - Return & Refund</option>
+                                    <option value="30 days return and replace">🔄 30 days - Return & Replace</option>
+                                    <option value="7 days return and refund">✅ 7 days - Return & Refund</option>
+                                    <option value="7 days return and replace">🔄 7 days - Return & Replace</option>
+                                    <option value="60 days return and refund">✅ 60 days - Return & Refund</option>
+                                </select>
+                            </div>
+                            <button class="btn-save-product" onclick="saveProduct()">Save Product</button>
+                            <button class="btn-cancel" onclick="toggleProductForm()">Cancel</button>
+                        </div>
+
+                        <div id="adminProductsList" class="admin-products-list"></div>
+                    </div>
+
+                    <!-- Offers Tab -->
+                    <div id="offersTab" class="admin-tab">
+                        <h3>Manage Offers & Discounts</h3>
+                        <button class="btn-add-offer" onclick="toggleOfferForm()">+ Add New Offer</button>
+                        
+                        <div id="offerForm" class="offer-form" style="display: none;">
+                            <h4>Create Offer</h4>
+                            <input type="hidden" id="offerFormId">
+                            <div class="form-group">
+                                <label>Offer Name:</label>
+                                <input type="text" id="formOfferName" placeholder="e.g., Summer Sale">
+                            </div>
+                            <div class="form-group">
+                                <label>Discount %:</label>
+                                <input type="number" id="formDiscount" placeholder="Discount percentage" min="0" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label>Category:</label>
+                                <select id="formOfferCategory">
+                                    <option value="">All Products</option>
+                                    <option value="t-shirts">T-Shirts</option>
+                                    <option value="hoodies">Hoodies</option>
+                                    <option value="jackets">Jackets</option>
+                                    <option value="accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Valid Until:</label>
+                                <input type="date" id="formOfferEndDate">
+                            </div>
+                            <button class="btn-save-offer" onclick="saveOffer()">Create Offer</button>
+                            <button class="btn-cancel" onclick="toggleOfferForm()">Cancel</button>
+                        </div>
+
+                        <div id="offersList" class="offers-list"></div>
+                    </div>
+
+                    <!-- Return/Replace Tab -->
+                    <div id="returnsTab" class="admin-tab">
+                        <h3>🔄 Return/Replace Requests</h3>
+                        <div style="margin-bottom: 1.5rem; background: rgba(139, 92, 246, 0.1); padding: 1rem; border-radius: 8px; border-left: 4px solid #8b5cf6;">
+                            <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">
+                                📌 Manage customer return and replacement requests. Review photos, check AI risk score, and approve/reject requests.
+                            </p>
+                        </div>
+                        <div id="adminReturnsContainer" style="display: grid; gap: 1.5rem;"></div>
+                    </div>
+
+                    <!-- Vendor Management Tab -->
+                    <div id="vendorsTab" class="admin-tab">
+                        <h3>🏪 Vendor Management - Fraud Detection & Monitoring</h3>
+                        <div style="margin-bottom: 1.5rem; background: rgba(59, 130, 246, 0.1); padding: 1rem; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                            <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">
+                                👨‍💼 Admin Leadership Dashboard - Monitor all vendors (Amazon, Flipkart, Direct Sellers) for fraud prevention and quality assurance.
+                            </p>
+                        </div>
+                        
+                        <!-- Add New Vendor Button -->
+                        <button class="btn-add-vendor" onclick="toggleVendorForm()" style="margin-bottom: 1.5rem; background: #3b82f6; color: white; padding: 0.7rem 1.2rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">+ Add New Vendor</button>
+                        
+                        <!-- Vendor Form -->
+                        <div id="vendorForm" class="vendor-form" style="display: none; background: rgba(59, 130, 246, 0.05); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 2px solid #3b82f6;">
+                            <h4>📝 Register New Vendor</h4>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label>Vendor Name:</label>
+                                <input type="text" id="vendorName" placeholder="e.g., Amazon, Flipkart, Store Name" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label>Vendor Type:</label>
+                                <select id="vendorType" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                                    <option value="Marketplace">🏬 Marketplace (Amazon, Flipkart)</option>
+                                    <option value="Direct Seller">🏪 Direct Seller</option>
+                                    <option value="Partner">🤝 Partner</option>
+                                    <option value="Distributor">📦 Distributor</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label>Contact Email:</label>
+                                <input type="email" id="vendorEmail" placeholder="vendor@example.com" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label>Contact Phone:</label>
+                                <input type="tel" id="vendorPhone" placeholder="+91 XXXXXXXXXX" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label>Commission Rate (%):</label>
+                                <input type="number" id="vendorCommission" placeholder="5-20" min="0" max="100" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label>Account Status:</label>
+                                <select id="vendorStatus" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                                    <option value="Active">✅ Active</option>
+                                    <option value="Inactive">❌ Inactive</option>
+                                    <option value="Under Review">🔍 Under Review</option>
+                                    <option value="Suspended">⛔ Suspended</option>
+                                </select>
+                            </div>
+                            <button class="btn-save-vendor" onclick="saveVendor()" style="background: #10b981; color: white; padding: 0.7rem 1.2rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-right: 0.5rem;">Save Vendor</button>
+                            <button class="btn-cancel" onclick="toggleVendorForm()" style="background: #6b7280; color: white; padding: 0.7rem 1.2rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Cancel</button>
+                        </div>
+
+                        <!-- Vendors List -->
+                        <div id="vendorsList" style="display: grid; gap: 1.5rem;"></div>
+                    </div>
+
+                    <!-- Orders Tab REMOVED - Now in Dashboard -->
+                    <!-- Orders now display in the Dashboard tab above -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Empty Cart/Wishlist Message -->
+        <div id="emptyMessage" class="empty-message" style="display: none;">
+            <p id="emptyText"></p>
+            <button class="btn-continue-shopping" onclick="navigateTo('shop')">Continue Shopping</button>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-title">🇮🇳 ANCRIO</h3>
+                <p class="footer-description">Premium Indian fashion and accessories for the modern you. Quality, style, and affordability made in India.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/ancrio.store" target="_blank" title="Instagram">
+                        <span>📷</span>
+                    </a>
+                    <a href="https://facebook.com/ancrio" target="_blank" title="Facebook">
+                        <span>👍</span>
+                    </a>
+                    <a href="#" onclick="openWhatsAppChat(); return false;" title="WhatsApp">
+                        <span>💬</span>
+                    </a>
+                    <a href="https://twitter.com/ancrio" target="_blank" title="Twitter">
+                        <span>𝕏</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-heading">🇮🇳 Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="navigateTo('home')">Home</a></li>
+                    <li><a href="#" onclick="navigateTo('shop')">Shop</a></li>
+                    <li><a href="#" onclick="navigateTo('new-arrivals')">New Arrivals</a></li>
+                    <li><a href="#" onclick="navigateTo('collections')">Collections</a></li>
+                    <li><a href="#" onclick="navigateTo('story')">Our Story</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-heading">🇮🇳 Customer Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="openWhatsAppChat(); return false;">WhatsApp Support</a></li>
+                    <li><a href="mailto:support@ancrio.com">Email Us</a></li>
+                    <li><a href="#" onclick="viewSupport(); return false;">Support Options</a></li>
+                    <li><a href="#" onclick="viewPolicies(); return false;">Size Guide</a></li>
+                    <li><a href="#" onclick="viewPolicies(); return false;">Shipping Info</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-heading">🇮🇳 Policies</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="viewPolicies(); return false;">Privacy Policy</a></li>
+                    <li><a href="#" onclick="viewPolicies(); return false;">Terms & Conditions</a></li>
+                    <li><a href="#" onclick="viewPolicies(); return false;">Return Policy</a></li>
+                    <li><a href="#" onclick="viewPolicies(); return false;">Shipping Policy</a></li>
+                    <li><a href="#" onclick="viewPolicies(); return false;">Refund Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-heading">🇮🇳 Newsletter</h4>
+                <p>Subscribe to get exclusive deals and new collection updates!</p>
+                <div class="newsletter-input">
+                    <input type="email" id="newsletterEmail" placeholder="Your email">
+                    <button onclick="subscribeNewsletter()" class="newsletter-btn">Subscribe</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 ANCRIO 🇮🇳 | All rights reserved | Made in India 🇮🇳 | Designed for the modern Indian lifestyle | Made with ❤️ for fashion lovers</p>
+        </div>
+    </footer>
+
+    <!-- Login/Signup Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+            
+            <div class="login-container">
+                <div class="login-tabs">
+                    <button class="login-tab-btn active" onclick="switchLoginTab('login')">Login</button>
+                    <button class="login-tab-btn" onclick="switchLoginTab('signup')">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginTab" class="login-tab-content active">
+                    <h3>Welcome Back</h3>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password">
+                    </div>
+                    <button class="btn-login" onclick="handleLogin()">Login</button>
+                    <div class="admin-login">
+                        <input type="password" id="adminPassword" placeholder="Admin password (optional)">
+                        <button class="btn-admin-login" onclick="handleAdminLogin()">Admin Login</button>
+                    </div>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signupTab" class="login-tab-content">
+                    <h3>Create Account</h3>
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" id="signupName" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="signupEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="signupPassword" placeholder="Create a password">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password:</label>
+                        <input type="password" id="signupConfirmPassword" placeholder="Confirm your password">
+                    </div>
+                    <button class="btn-signup" onclick="handleSignup()">Create Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content checkout-modal">
+            <button class="modal-close" onclick="closeCheckoutModal()">&times;</button>
+            <h3>Checkout</h3>
+            <form class="checkout-form">
+                <div class="form-section">
+                    <h4>Shipping Address</h4>
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" id="checkoutName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="checkoutEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address:</label>
+                        <input type="text" id="checkoutAddress" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>City:</label>
+                            <input type="text" id="checkoutCity" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ZIP Code:</label>
+                            <input type="text" id="checkoutZip" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4>Payment Method</h4>
+                    <div class="form-group">
+                        <label>Card Number:</label>
+                        <input type="text" id="checkoutCard" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry:</label>
+                            <input type="text" id="checkoutExpiry" placeholder="MM/YY" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CVV:</label>
+                            <input type="text" id="checkoutCvv" placeholder="123" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-summary">
+                    <p>Order Total: <span id="checkoutTotal">$0.00</span></p>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button type="button" onclick="closeCheckoutModal()" style="flex: 1; padding: 0.8rem; background: rgba(255,255,255,0.1); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 1rem;">Cancel</button>
+                    <button type="button" onclick="placeOrder()" style="flex: 1; padding: 0.8rem; background: var(--gold-accent); color: var(--tertiary-dark); border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 1rem;">✅ Place Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div id="productDetailsModal" class="modal" style="display: none;" onclick="if(event.target.id==='productDetailsModal') closeProductDetails()">
+        <div class="modal-content" style="max-width: 600px;" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeProductDetails()">&times;</button>
+            <div id="productDetailsContainer" style="padding: 2rem;">
+                <!-- Product details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Return Request Modal -->
+    <!-- FLIPKART-STYLE RETURN/REFUND MODAL -->
+    <div id="returnRequestModal" class="modal" style="display: none;" onclick="if(event.target.id==='returnRequestModal') closeReturnModal()">
+        <div class="modal-content" style="max-width: 800px; max-height: 90vh; overflow-y: auto;" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeReturnModal()">&times;</button>
+            <div style="padding: 2rem;">
+                <h3 style="color: var(--gold-accent); margin: 0 0 0.5rem 0;">🔄 Return/Replace Request</h3>
+                <p style="margin: 0 0 1.5rem 0; color: var(--text-secondary); font-size: 0.9rem;">Follow these simple steps to process your return</p>
+                
+                <!-- Progress Indicator -->
+                <div style="display: flex; justify-content: space-between; margin-bottom: 2rem; position: relative;">
+                    <div style="position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: rgba(212,175,55,0.2); z-index: 1;"></div>
+                    <div style="flex: 1; text-align: center; position: relative; z-index: 2;">
+                        <div style="width: 40px; height: 40px; background: var(--gold-accent); border-radius: 50%; margin: 0 auto 0.5rem; display: flex; align-items: center; justify-content: center; color: var(--primary-dark); font-weight: 700;">1</div>
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-primary);">Reason</p>
+                    </div>
+                    <div style="flex: 1; text-align: center; position: relative; z-index: 2;">
+                        <div style="width: 40px; height: 40px; background: rgba(212,175,55,0.3); border-radius: 50%; margin: 0 auto 0.5rem; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 700;">2</div>
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">Verification</p>
+                    </div>
+                    <div style="flex: 1; text-align: center; position: relative; z-index: 2;">
+                        <div style="width: 40px; height: 40px; background: rgba(212,175,55,0.3); border-radius: 50%; margin: 0 auto 0.5rem; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 700;">3</div>
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">Confirm</p>
+                    </div>
+                </div>
+
+                <form id="returnForm" onsubmit="submitReturnRequest(event)">
+                    <!-- STEP 1: Return Reason & Type -->
+                    <div id="step1" style="display: block; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(212,175,55,0.2);">
+                        <h4 style="color: var(--gold-accent); margin: 0 0 1rem 0;">Step 1: Why do you want to return?</h4>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 0.8rem;">Select Reason</label>
+                            <select id="returnReason" required onchange="updateVerificationSteps()" style="width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; color: var(--text-primary); font-size: 1rem;">
+                                <option value="">-- Select a reason --</option>
+                                <option value="Defective">❌ Defective/Broken Item</option>
+                                <option value="Wrong size">📏 Wrong Size Received</option>
+                                <option value="Wrong item">📦 Wrong Item Delivered</option>
+                                <option value="Not as described">🖼️ Item Not as Described</option>
+                                <option value="Quality issue">⚠️ Poor Quality</option>
+                                <option value="Color mismatch">🎨 Color Mismatch</option>
+                                <option value="Changed mind">🤔 Changed My Mind</option>
+                                <option value="Other">📝 Other Reason</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 0.8rem;">What would you like?</label>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <label style="display: flex; align-items: center; cursor: pointer; padding: 0.8rem; background: rgba(212,175,55,0.1); border: 2px solid rgba(212,175,55,0.3); border-radius: 6px; flex: 1; min-width: 150px;">
+                                    <input type="radio" name="returnType" value="Refund" checked onchange="updateVerificationSteps()" style="margin-right: 0.8rem; width: 18px; height: 18px; cursor: pointer;">
+                                    <span style="color: var(--text-primary); font-weight: 600;">💰 Refund</span>
+                                </label>
+                                <label style="display: flex; align-items: center; cursor: pointer; padding: 0.8rem; background: rgba(74,222,128,0.1); border: 2px solid rgba(74,222,128,0.3); border-radius: 6px; flex: 1; min-width: 150px;">
+                                    <input type="radio" name="returnType" value="Replace" onchange="updateVerificationSteps()" style="margin-right: 0.8rem; width: 18px; height: 18px; cursor: pointer;">
+                                    <span style="color: var(--text-primary); font-weight: 600;">🔄 Replace</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Photo Verification (Flipkart Style) -->
+                    <div id="step2" style="display: block; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(212,175,55,0.2);">
+                        <h4 style="color: var(--gold-accent); margin: 0 0 1rem 0;">Step 2: Photo Verification</h4>
+                        <p style="margin: 0 0 1rem 0; color: var(--text-secondary); font-size: 0.9rem;">📸 Upload clear photos to verify the issue. Include packaging if relevant.</p>
+
+                        <!-- Verification Steps Guide -->
+                        <div style="background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.2); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                            <p style="margin: 0 0 0.8rem 0; color: var(--text-primary); font-weight: 600;">📋 What to photograph:</p>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <span style="color: var(--gold-accent);">✓</span>
+                                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Product packaging</span>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <span style="color: var(--gold-accent);">✓</span>
+                                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Product close-up</span>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <span style="color: var(--gold-accent);">✓</span>
+                                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Issue/Defect area</span>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <span style="color: var(--gold-accent);">✓</span>
+                                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Unboxing photo</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Camera & Upload Section -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                                <button type="button" onclick="startCameraCapture()" style="flex: 1; min-width: 150px; padding: 0.8rem; background: linear-gradient(135deg, #d4af37, #c9a24d); color: var(--primary-dark); border: none; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.95rem;">
+                                    📷 Take Photo
+                                </button>
+                                <button type="button" onclick="document.getElementById('returnPhotos').click()" style="flex: 1; min-width: 150px; padding: 0.8rem; background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.95rem;">
+                                    📂 Upload Files
+                                </button>
+                            </div>
+                            <input type="file" id="returnPhotos" multiple accept="image/*,video/*" onchange="handlePhotoUpload(this)" style="display: none;">
+                        </div>
+
+                        <!-- Photo Preview Grid -->
+                        <div id="photoPreview" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; margin-bottom: 1rem;"></div>
+                        <p id="photoCounter" style="margin: 0 0 1rem 0; color: var(--text-secondary); font-size: 0.9rem;">📸 <strong id="photoCount">0</strong> photos uploaded (minimum 2 recommended for faster approval)</p>
+
+                        <!-- Camera Modal (Reusable) -->
+                        <div id="cameraModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 5000; flex-direction: column; align-items: center; justify-content: center;">
+                            <div style="position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                <button type="button" onclick="closeCameraModal()" style="position: absolute; top: 20px; right: 20px; background: rgba(255,0,0,0.8); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.5rem; cursor: pointer; z-index: 5001;">×</button>
+                                <video id="cameraStream" style="max-width: 90vw; max-height: 80vh; border-radius: 12px; object-fit: cover;"></video>
+                                <div style="position: absolute; bottom: 30px; display: flex; gap: 1rem; z-index: 5001;">
+                                    <button type="button" id="capturePhotoBtn" onclick="capturePhotoFromCamera()" style="padding: 1rem 2rem; background: linear-gradient(135deg, #d4af37, #c9a24d); color: var(--primary-dark); border: none; border-radius: 50%; width: 70px; height: 70px; font-size: 1.5rem; cursor: pointer; font-weight: 600;">📸</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Additional Details -->
+                    <div id="step3" style="display: block; margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--gold-accent); margin: 0 0 1rem 0;">Step 3: Additional Details</h4>
+                        
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem;">📝 Describe the issue</label>
+                            <textarea id="returnMessage" placeholder="Please provide more details about the issue (optional)" style="width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; color: var(--text-primary); min-height: 100px; font-family: inherit; font-size: 0.95rem;"></textarea>
+                        </div>
+
+                        <!-- Return Policy Info -->
+                        <div style="background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                            <p style="margin: 0 0 0.5rem 0; color: #4ade80; font-weight: 600;">✓ Return Policy</p>
+                            <ul style="margin: 0; padding-left: 1.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                                <li>7-day return window from delivery</li>
+                                <li>Free return pickup from your address</li>
+                                <li>Full refund within 7-10 business days</li>
+                                <li>Replacement shipped within 5-7 business days</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div style="display: flex; gap: 0.8rem;">
+                        <button type="button" onclick="closeReturnModal()" style="flex: 1; padding: 0.8rem; background: rgba(255,255,255,0.1); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 1rem;">Cancel</button>
+                        <button type="submit" style="flex: 1; padding: 0.8rem; background: linear-gradient(135deg, #d4af37, #c9a24d); color: var(--primary-dark); border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 1rem;">Submit Return Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Floating Support (WhatsApp + AI Chat) -->
+    <div class="support-floaters">
+        <button class="support-btn whatsapp-btn" onclick="openWhatsAppChat()">
+            <span class="support-btn-icon">💬</span>
+            <span class="support-btn-label">WhatsApp</span>
+        </button>
+        <button class="support-btn ai-chat-btn" onclick="toggleAIChat()">
+            <span class="support-btn-icon">🤖</span>
+            <span class="support-btn-label">AI Help</span>
+        </button>
+    </div>
+
+    <div id="aiChatWidget" class="ai-chat-widget hidden" aria-hidden="true">
+        <div class="ai-chat-header">
+            <span>🤖 AI Assistant</span>
+            <button class="ai-chat-close" onclick="toggleAIChat()" aria-label="Close chat">×</button>
+        </div>
+        <div id="aiChatMessages" class="ai-chat-messages" role="log" aria-live="polite"></div>
+        <form id="aiChatForm" class="ai-chat-form" onsubmit="handleAIChatSubmit(event)">
+            <input id="aiChatInput" type="text" placeholder="Ask me about orders, returns, sizing..." autocomplete="off" required />
+            <button type="submit">Send</button>
+        </form>
+        <div class="ai-chat-hint">Tip: Ask things like “Where is my order?” or “How do I return an item?”</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

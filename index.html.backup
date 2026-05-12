@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANCRIO 🇮🇳 - Premium Fashion & Accessories (India)</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+
+    <!-- PREMIUM ENTRANCE SPLASH SCREEN -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-background"></div>
+            <div class="splash-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            <div class="splash-logo">
+                <span class="logo-icon-splash">🇮🇳</span>
+            </div>
+            <h1 class="splash-title">ANCRIO</h1>
+            <p class="splash-subtitle">Premium Fashion & Accessories</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🇮🇳</span>
+                <span class="logo-text">ANCRIO</span>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#" onclick="navigateTo('home')" class="nav-link">Home</a>
+                <a href="#" onclick="navigateTo('story')" class="nav-link">Our Story</a>
+                <a href="#" onclick="navigateTo('shop')" class="nav-link">Shop</a>
+                <a href="#" onclick="navigateTo('new-arrivals')" class="nav-link">New Arrivals</a>
+                <a href="#" onclick="navigateTo('collections')" class="nav-link">Collections</a>
+            </div>
+
+            <div class="nav-actions">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search products..." class="search-input">
+                    <button onclick="handleSearch()" class="search-btn">🔍</button>
+                </div>
+                <button class="nav-icon-btn" onclick="navigateTo('wishlist')" title="Wishlist">
+                    <span class="icon">♡</span>
+                    <span class="badge" id="wishlistBadge">0</span>
+                </button>
+                <button class="nav-icon-btn" onclick="navigateTo('cart')" title="Shopping Cart">
+                    <span class="icon">🛍</span>
+                    <span class="badge" id="cartBadge">0</span>
+                </button>
+                <button class="nav-icon-btn" id="userBtn" onclick="openLoginModal()" title="Account">
+                    <span class="icon">👤</span>
+                </button>
+            </div>
+
+            <button class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <!-- PREMIUM HERO BANNER -->
+            <section class="hero-premium">
+                <div class="hero-slider">
+                    <div class="hero-slide active">
+                        <div class="hero-content-premium">
+                            <span class="hero-badge">🌟 EXCLUSIVE COLLECTION</span>
+                            <h1 class="hero-title-premium">Premium Fashion<br>For The Modern You</h1>
+                            <p class="hero-subtitle-premium">Elevate your style with our curated collection of premium fashion & accessories</p>
+                            <div class="hero-buttons">
+                                <button class="btn-primary-large" onclick="navigateTo('shop')">🛍️ Shop Now</button>
+                                <button class="btn-secondary-large" onclick="navigateTo('story')">📖 Learn Our Story</button>
+                            </div>
+                        </div>
+                        <div class="hero-visual">
+                            <div class="hero-shape"></div>
+                            <span class="hero-emoji">✨</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CATEGORY SHOWCASE -->
+            <section class="category-showcase" data-animation="slide-in-up">
+                <h2 class="section-title">Shop By Category</h2>
+                <div class="category-grid">
+                    <div class="category-card" onclick="filterByCategory('t-shirts')">
+                        <div class="category-icon">👕</div>
+                        <h3>T-Shirts</h3>
+                        <p>50+ Styles</p>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('hoodies')">
+                        <div class="category-icon">🧥</div>
+                        <h3>Hoodies</h3>
+                        <p>30+ Styles</p>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('jackets')">
+                        <div class="category-icon">🕴️</div>
+                        <h3>Jackets</h3>
+                        <p>25+ Styles</p>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('accessories')">
+                        <div class="category-icon">⌚</div>
+                        <h3>Accessories</h3>
+                        <p>40+ Styles</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TRENDING SECTION -->
+            <section class="trending-section" data-animation="slide-in-up">
+                <div class="trending-header">
+                    <h2 class="section-title">🔥 Trending Now</h2>
+                    <a href="#" onclick="navigateTo('shop')" class="view-all">View All →</a>
+                </div>
+                <div id="trendingGrid" class="products-grid"></div>
+            </section>
+
+            <!-- NEW ARRIVALS SECTION -->
+            <section class="arrivals-section" data-animation="slide-in-up">
+                <div class="arrivals-header">
+                    <h2 class="section-title">✨ New Arrivals</h2>
+                    <a href="#" onclick="navigateTo('new-arrivals')" class="view-all">View All →</a>
+                </div>
+                <div id="newArrivalsGrid" class="products-grid"></div>
+            </section>
+
+            <!-- PREMIUM FEATURES SECTION -->
+            <section class="premium-features" data-animation="slide-in-up">
+                <h2 class="section-title">Why Choose ANCRIO?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🇮🇳</div>
+                        <h3>Made in India</h3>
+                        <p>100% Indian craftsmanship with world-class quality</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💎</div>
+                        <h3>Premium Quality</h3>
+                        <p>Best materials & sustainable fashion practices</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Fast Delivery</h3>
+                        <p>Pan-India express shipping within 2-3 days</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>Best Prices</h3>
+                        <p>Direct from manufacturer - no middleman markup</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h3>Easy Returns</h3>
+                        <p>30-day return policy, no questions asked</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>100% Secure</h3>
+                        <p>Encrypted payments & buyer protection guarantee</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DISCOUNT FLASH BANNER -->
+            <section class="flash-banner" data-animation="slide-in-up">
+                <div class="flash-content">
+                    <span class="flash-badge">⏰ LIMITED TIME</span>
+                    <h3>Special Discount on Your First Order</h3>
+                    <p>Use Code: <strong>ANCRIO20</strong> for 20% OFF</p>
+                    <button class="btn-primary-large" onclick="navigateTo('shop')">Shop & Save Now</button>
+                </div>
+            </section>
+
+            <!-- TESTIMONIALS SECTION -->
+            <section class="testimonials" data-animation="slide-in-up">
+                <h2 class="section-title">Loved by 50K+ Customers</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">"Amazing quality and super fast delivery! The fit is perfect and the price is unbeatable."</p>
+                        <h4 class="testimonial-name">Priya Sharma</h4>
+                        <p class="testimonial-location">📍 Mumbai</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">"Best fashion store I've found! Their customer service is incredible and returns are hassle-free."</p>
+                        <h4 class="testimonial-name">Rahul Patel</h4>
+                        <p class="testimonial-location">📍 Bangalore</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">"Love the exclusive designs! Every piece feels premium and made with care. Highly recommended!"</p>
+                        <h4 class="testimonial-name">Anjali Verma</h4>
+                        <p class="testimonial-location">📍 Delhi</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CALL TO ACTION SECTION -->
+            <section class="cta-final" data-animation="slide-in-up">
+                <h2>Ready to Upgrade Your Wardrobe?</h2>
+                <p>Join 50,000+ satisfied customers shopping premium Indian fashion</p>
+                <button class="btn-primary-large" onclick="navigateTo('shop')">Start Shopping 🛒</button>
+            </section>
+        </section>
+
+        <!-- Our Story Page -->
+        <section id="story" class="page">
+            <div class="story-container">
+                <div class="story-header">
+                    <h1>🇮🇳 Our Story</h1>
+                    <p class="story-subtitle">Made in India, Worn with Pride | Discover the journey behind ANCRIO</p>
+                </div>
+
+                <div class="story-content">
+                    <div class="story-section">
+                        <h2>✨ Who We Are</h2>
+                        <p>ANCRIO 🇮🇳 is a premium Indian fashion and accessories brand dedicated to bringing high-quality, trendy styles to fashion enthusiasts aged 14-30. We're proud to be an Indian brand, creating fashion that resonates with Indian culture and global trends.</p>
+                    </div>
+
+                    <div class="story-section">
+                        <h2>🎯 Our Mission</h2>
+                        <p>Our mission is to make premium Indian fashion accessible and affordable for everyone across India. We curate the finest collections of t-shirts, hoodies, jackets, accessories, and lifestyle products that celebrate Indian youth and modern lifestyle.</p>
+                    </div>
+
+                    <div class="story-section">
+                        <h2>💡 Our Values</h2>
+                        <div class="values-grid">
+                            <div class="value-card">
+                                <span class="value-icon">🇮🇳</span>
+                                <h3>Indian Pride</h3>
+                                <p>Celebrating Indian culture and heritage in every design</p>
+                            </div>
+                            <div class="value-card">
+                                <span class="value-icon">👕</span>
+                                <h3>Quality First</h3>
+                                <p>Every product meets Indian excellence standards</p>
+                            </div>
+                            <div class="value-card">
+                                <span class="value-icon">💚</span>
+                                <h3>Sustainability</h3>
+                                <p>We care about the environment and ethical production</p>
+                            </div>
+                            <div class="value-card">
+                                <span class="value-icon">🤝</span>
+                                <h3>Community</h3>
+                                <p>Building a community of fashion lovers and trendsetters</p>
+                            </div>
+                            <div class="value-card">
+                                <span class="value-icon">🌟</span>
+                                <h3>Innovation</h3>
+                                <p>Constantly bringing new and exciting styles to our collection</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-section">
+                        <h2>📊 By The Numbers</h2>
+                        <div class="stats-grid">
+                            <div class="stat">
+                                <h3>50K+</h3>
+                                <p>Happy Customers</p>
+                            </div>
+                            <div class="stat">
+                                <h3>500+</h3>
+                                <p>Products Available</p>
+                            </div>
+                            <div class="stat">
+                                <h3>100K+</h3>
+                                <p>Units Sold</p>
+                            </div>
+                            <div class="stat">
+                                <h3>4.8★</h3>
+                                <p>Average Rating</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-section">
+                        <h2>🌍 Why Choose ANCRIO?</h2>
+                        <ul class="why-choose-list">
+                            <li>✓ Premium quality at affordable prices</li>
+                            <li>✓ Trendy designs for teens and young adults</li>
+                            <li>✓ Fast and reliable delivery</li>
+                            <li>✓ 30-day hassle-free returns</li>
+                            <li>✓ 24/7 customer support</li>
+                            <li>✓ Secure payment options</li>
+                            <li>✓ Exclusive collections and limited editions</li>
+                            <li>✓ Sustainable and ethical practices</li>
+                        </ul>
+                    </div>
+
+                    <div class="story-section">
+                        <h2>📞 Get In Touch</h2>
+                        <p>Have questions or feedback? We'd love to hear from you!</p>
+                        <div class="contact-links">
+                            <a href="https://wa.me/917999999999" target="_blank" class="contact-btn">
+                                <span>💬</span> WhatsApp Us
+                            </a>
+                            <a href="mailto:info@ancrio.com" class="contact-btn">
+                                <span>📧</span> Email Us
+                            </a>
+                            <a href="tel:+917999999999" class="contact-btn">
+                                <span>📞</span> Call Us
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop Page -->
+        <section id="shop" class="page">
+            <div class="shop-header">
+                <h2>Shop All Products</h2>
+                <p>Browse our complete collection - all items in one place</p>
+            </div>
+            <div class="shop-container">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar">
+                    <h3 class="filters-title">🔍 Filters</h3>
+                    
+                    <div class="filter-group">
+                        <h4 class="filter-heading">Category</h4>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" value="all" onchange="filterProducts()"> ✓ All Products
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" value="t-shirts" onchange="filterProducts()"> 👕 T-Shirts
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" value="hoodies" onchange="filterProducts()"> 🧥 Hoodies
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" value="jackets" onchange="filterProducts()"> 🕴️ Jackets
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" value="accessories" onchange="filterProducts()"> ⌚ Accessories
+                        </label>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4 class="filter-heading">Price Range (₹)</h4>
+                        <div class="price-filter">
+                            <label>
+                                Min: ₹<input type="number" id="minPrice" value="0" onchange="filterProducts()">
+                            </label>
+                            <label>
+                                Max: ₹<input type="number" id="maxPrice" value="5000" onchange="filterProducts()">
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="reset-filter-btn" onclick="resetFilters()">↻ Reset Filters</button>
+                </aside>
+
+                <!-- Products Grid -->
+                <div class="shop-content">
+                    <div id="shopGrid" class="products-grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Arrivals Page -->
+        <section id="new-arrivals" class="page">
+            <h2 class="page-title">New Arrivals</h2>
+            <div id="newArrivalsPageGrid" class="products-grid"></div>
+        </section>
+
+        <!-- Collections Page -->
+        <section id="collections" class="page">
+            <h2 class="page-title">Collections</h2>
+            <div class="collections-grid">
+                <div class="collection-card" onclick="filterByCollection('casual')">
+                    <div class="collection-image">Casual</div>
+                    <h3>Casual Wear</h3>
+                </div>
+                <div class="collection-card" onclick="filterByCollection('formal')">
+                    <div class="collection-image">Formal</div>
+                    <h3>Formal Wear</h3>
+                </div>
+                <div class="collection-card" onclick="filterByCollection('sporty')">
+                    <div class="collection-image">Sporty</div>
+                    <h3>Sporty Collection</h3>
+                </div>
+                <div class="collection-card" onclick="filterByCollection('premium')">
+                    <div class="collection-image">Premium</div>
+                    <h3>Premium Line</h3>
+                </div>
+            </div>
+            <div id="collectionGrid" class="products-grid" style="margin-top: 2rem;"></div>
+        </section>
+
+        <!-- Product Detail Page -->
+        <section id="product-detail" class="page">
+            <div class="product-detail-container">
+                <div class="product-detail-image">
+                    <img id="detailImage" src="" alt="Product">
+                </div>
+                <div class="product-detail-info">
+                    <h1 id="detailName"></h1>
+                    <div class="rating-section">
+                        <div id="detailRating" class="stars"></div>
+                        <span id="detailReviewCount" class="review-count"></span>
+                    </div>
+                    <div class="price-section">
+                        <span id="detailPrice" class="price"></span>
+                        <span id="detailOriginalPrice" class="original-price"></span>
+                        <span id="detailDiscount" class="discount-badge"></span>
+                    </div>
+                    <p id="detailDescription" class="description"></p>
+                    
+                    <div class="size-selector">
+                        <label>Size:</label>
+                        <div id="sizeOptions" class="size-options"></div>
+                    </div>
+
+                    <div class="quantity-selector">
+                        <label>Quantity:</label>
+                        <div class="quantity-controls">
+                            <button onclick="decreaseQuantity()">−</button>
+                            <input type="number" id="quantity" value="1" min="1" readonly>
+                            <button onclick="increaseQuantity()">+</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-add-cart" onclick="buyNow()">🛒 Buy Now</button>
+                        <button class="btn-add-cart secondary" onclick="addToCart()">Add to Cart</button>
+                        <button class="btn-wishlist" id="wishlistBtn" onclick="toggleWishlist()">♡ Wishlist</button>
+                    </div>
+
+                    <div class="trust-info">
+                        <p>✓ 100% Authentic</p>
+                        <p>✓ Secure Payment</p>
+                        <p>✓ 30-Day Returns</p>
+                    </div>
+                </div>
+            <!-- Related Products -->
+            <section class="related-products">
+                <h3>Related Products</h3>
+                <div id="relatedProducts" class="products-grid"></div>
+            </section>
+        </section>
+
+        <!-- Cart Page -->
+        <section id="cart" class="page">
+            <h2 class="page-title">Shopping Cart</h2>
+            <div class="cart-container">
+                <div class="cart-items">
+                    <div id="cartItemsList"></div>
+                </div>
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span id="shipping">Free</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="total">$0.00</span>
+                    </div>
+                    <button class="btn-checkout" onclick="checkout()">Proceed to Checkout</button>
+                    <button class="btn-continue-shopping" onclick="navigateTo('shop')">Continue Shopping</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wishlist Page -->
+        <section id="wishlist" class="page">
+            <h2 class="page-title">My Wishlist</h2>
+            <div id="wishlistGrid" class="products-grid"></div>
+        </section>
+
+        <!-- User Account Page -->
+        <section id="account" class="page">
+            <div class="account-container">
+                <div class="account-header">
+                    <h2>My Account</h2>
+                    <button class="btn-logout" onclick="logout()">Logout</button>
+                </div>
+
+                <div class="account-tabs">
+                    <button class="tab-btn active" onclick="switchTab('profile')">Profile</button>
+                    <button class="tab-btn" onclick="switchTab('orders')">Order History</button>
+                </div>
+
+                <div id="profileTab" class="tab-content active">
+                    <h3>Profile Information</h3>
+                    <div class="profile-info">
+                        <div class="info-row">
+                            <label>Name:</label>
+                            <span id="userName"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Email:</label>
+                            <span id="userEmail"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Member Since:</label>
+                            <span id="userJoined"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ordersTab" class="tab-content">
+                    <h3>Order History</h3>
+                    <div id="ordersList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Panel -->
+        <section id="admin" class="page">
+            <div class="admin-panel">
+                <aside class="admin-sidebar">
+                    <h3 class="admin-title">ADMIN PANEL</h3>
+                    <nav class="admin-nav">
+                        <button class="admin-nav-btn active" onclick="switchAdminTab('dashboard')">📊 Dashboard</button>
+                        <button class="admin-nav-btn" onclick="switchAdminTab('products')">📦 Products</button>
+                        <button class="admin-nav-btn" onclick="switchAdminTab('offers')">🎁 Offers & Discounts</button>
+                        <button class="admin-nav-btn" onclick="switchAdminTab('orders')">📋 Orders</button>
+                    </nav>
+                    <button class="btn-logout" onclick="exitAdminPanel()">Exit Admin</button>
+                </aside>
+
+                <div class="admin-content">
+                    <!-- Dashboard Tab -->
+                    <div id="dashboardTab" class="admin-tab active">
+                        <h3>Dashboard</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h4>Total Products</h4>
+                                <p id="statProducts" class="stat-value">0</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Total Orders</h4>
+                                <p id="statOrders" class="stat-value">0</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Total Revenue</h4>
+                                <p id="statRevenue" class="stat-value">$0.00</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Total Users</h4>
+                                <p id="statUsers" class="stat-value">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Products Tab -->
+                    <div id="productsTab" class="admin-tab">
+                        <h3>Manage Products</h3>
+                        
+                        <!-- Discount Calculator -->
+                        <div class="discount-calculator">
+                            <h4>💰 Discount Calculator</h4>
+                            <div class="calc-inputs">
+                                <div class="calc-field">
+                                    <label>Actual Price:</label>
+                                    <input type="number" id="calcActualPrice" placeholder="₹0" oninput="calculateDiscount()">
+                                </div>
+                                <div class="calc-field">
+                                    <label>Discount Price:</label>
+                                    <input type="number" id="calcDiscountPrice" placeholder="₹0" oninput="calculateDiscount()">
+                                </div>
+                            </div>
+                            <div class="calc-results">
+                                <div class="result-box">
+                                    <div class="result-label">Discount %</div>
+                                    <div class="result-value" id="calcPercentage">0%</div>
+                                </div>
+                                <div class="result-box">
+                                    <div class="result-label">Customer Saves</div>
+                                    <div class="result-value" id="calcSavings">₹0</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-add-product" onclick="toggleProductForm()">+ Add New Product</button>
+                        
+                        <div id="productForm" class="product-form" style="display: none;">
+                            <h4>Add/Edit Product</h4>
+                            <input type="hidden" id="productFormId">
+                            <div class="form-group">
+                                <label>Product Name:</label>
+                                <input type="text" id="formName" placeholder="Product name">
+                            </div>
+                            <div class="form-group">
+                                <label>Category:</label>
+                                <select id="formCategory">
+                                    <option value="t-shirts">T-Shirts</option>
+                                    <option value="hoodies">Hoodies</option>
+                                    <option value="jackets">Jackets</option>
+                                    <option value="accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Actual Price (Before Discount):</label>
+                                <input type="number" id="formPrice" placeholder="Price">
+                            </div>
+                            <div class="form-group">
+                                <label>Sale Price (After Discount):</label>
+                                <input type="number" id="formSalePrice" placeholder="Discounted price" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Description:</label>
+                                <textarea id="formDescription" placeholder="Product description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Image URL:</label>
+                                <input type="text" id="formImage" placeholder="Image URL">
+                            </div>
+                            <div class="form-group">
+                                <label>Stock:</label>
+                                <input type="number" id="formStock" placeholder="Stock quantity">
+                            </div>
+                            <button class="btn-save-product" onclick="saveProduct()">Save Product</button>
+                            <button class="btn-cancel" onclick="toggleProductForm()">Cancel</button>
+                        </div>
+
+                        <div id="adminProductsList" class="admin-products-list"></div>
+                    </div>
+
+                    <!-- Offers Tab -->
+                    <div id="offersTab" class="admin-tab">
+                        <h3>Manage Offers & Discounts</h3>
+                        <button class="btn-add-offer" onclick="toggleOfferForm()">+ Add New Offer</button>
+                        
+                        <div id="offerForm" class="offer-form" style="display: none;">
+                            <h4>Create Offer</h4>
+                            <input type="hidden" id="offerFormId">
+                            <div class="form-group">
+                                <label>Offer Name:</label>
+                                <input type="text" id="formOfferName" placeholder="e.g., Summer Sale">
+                            </div>
+                            <div class="form-group">
+                                <label>Discount %:</label>
+                                <input type="number" id="formDiscount" placeholder="Discount percentage" min="0" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label>Category:</label>
+                                <select id="formOfferCategory">
+                                    <option value="">All Products</option>
+                                    <option value="t-shirts">T-Shirts</option>
+                                    <option value="hoodies">Hoodies</option>
+                                    <option value="jackets">Jackets</option>
+                                    <option value="accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Valid Until:</label>
+                                <input type="date" id="formOfferEndDate">
+                            </div>
+                            <button class="btn-save-offer" onclick="saveOffer()">Create Offer</button>
+                            <button class="btn-cancel" onclick="toggleOfferForm()">Cancel</button>
+                        </div>
+
+                        <div id="offersList" class="offers-list"></div>
+                    </div>
+
+                    <!-- Orders Tab -->
+                    <div id="ordersTab" class="admin-tab">
+                        <h3>Orders Management</h3>
+                        <div id="adminOrdersList" class="orders-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Empty Cart/Wishlist Message -->
+        <div id="emptyMessage" class="empty-message" style="display: none;">
+            <p id="emptyText"></p>
+            <button class="btn-continue-shopping" onclick="navigateTo('shop')">Continue Shopping</button>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-title">🇮🇳 ANCRIO</h3>
+                <p class="footer-description">Premium Indian fashion and accessories for the modern you. Quality, style, and affordability made in India.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/ancrio" target="_blank" title="Instagram">
+                        <span>📷</span>
+                    </a>
+                    <a href="https://facebook.com/ancrio" target="_blank" title="Facebook">
+                        <span>👍</span>
+                    </a>
+                    <a href="https://wa.me/917999999999" target="_blank" title="WhatsApp">
+                        <span>💬</span>
+                    </a>
+                    <a href="https://twitter.com/ancrio" target="_blank" title="Twitter">
+                        <span>𝕏</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-heading">🇮🇳 Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="navigateTo('home')">Home</a></li>
+                    <li><a href="#" onclick="navigateTo('shop')">Shop</a></li>
+                    <li><a href="#" onclick="navigateTo('new-arrivals')">New Arrivals</a></li>
+                    <li><a href="#" onclick="navigateTo('collections')">Collections</a></li>
+                    <li><a href="#" onclick="navigateTo('story')">Our Story</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-heading">🇮🇳 Customer Support</h4>
+                <ul class="footer-links">
+                    <li><a href="https://wa.me/917999999999" target="_blank">WhatsApp Support</a></li>
+                    <li><a href="mailto:support@ancrio.com">Email Us</a></li>
+                    <li><a href="#" onclick="navigateTo('shop')">Track Order</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-heading">🇮🇳 Policies</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="footer-heading">🇮🇳 Newsletter</h4>
+                <p>Subscribe to get exclusive deals and new collection updates!</p>
+                <div class="newsletter-form">
+                    <input type="email" id="newsletterEmail" placeholder="Your email" class="newsletter-input">
+                    <button onclick="subscribeNewsletter()" class="newsletter-btn">Subscribe</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 ANCRIO 🇮🇳 | All rights reserved | Made in India 🇮🇳 | Designed for the modern Indian lifestyle | Made with ❤️ for fashion lovers</p>
+        </div>
+    </footer>
+
+    <!-- Login/Signup Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+            
+            <div class="login-container">
+                <div class="login-tabs">
+                    <button class="login-tab-btn active" onclick="switchLoginTab('login')">Login</button>
+                    <button class="login-tab-btn" onclick="switchLoginTab('signup')">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginTab" class="login-tab-content active">
+                    <h3>Welcome Back</h3>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password">
+                    </div>
+                    <button class="btn-login" onclick="handleLogin()">Login</button>
+                    <div class="admin-login">
+                        <input type="password" id="adminPassword" placeholder="Admin password (optional)">
+                        <button class="btn-admin-login" onclick="handleAdminLogin()">Admin Login</button>
+                    </div>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signupTab" class="login-tab-content">
+                    <h3>Create Account</h3>
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" id="signupName" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="signupEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="signupPassword" placeholder="Create a password">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password:</label>
+                        <input type="password" id="signupConfirmPassword" placeholder="Confirm your password">
+                    </div>
+                    <button class="btn-signup" onclick="handleSignup()">Create Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content checkout-modal">
+            <button class="modal-close" onclick="closeCheckoutModal()">&times;</button>
+            <h3>Checkout</h3>
+            <form class="checkout-form">
+                <div class="form-section">
+                    <h4>Shipping Address</h4>
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" id="checkoutName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="checkoutEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address:</label>
+                        <input type="text" id="checkoutAddress" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>City:</label>
+                            <input type="text" id="checkoutCity" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ZIP Code:</label>
+                            <input type="text" id="checkoutZip" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4>Payment Method</h4>
+                    <div class="form-group">
+                        <label>Card Number:</label>
+                        <input type="text" id="checkoutCard" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry:</label>
+                            <input type="text" id="checkoutExpiry" placeholder="MM/YY" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CVV:</label>
+                            <input type="text" id="checkoutCvv" placeholder="123" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-summary">
+                    <p>Order Total: <span id="checkoutTotal">$0.00</span></p>
+                </div>
+
+                <button type="button" class="btn-place-order" onclick="placeOrder()">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
