@@ -71,7 +71,6 @@
             </div>
 
             <div class="nav-actions">
-                <button class="seller-btn" onclick="navigateTo('seller-dashboard')">Seller Hub</button>
                 <button class="nav-icon-btn" onclick="navigateTo('wishlist')" title="Wishlist">
                     <span class="icon">♡</span>
                     <span class="badge" id="wishlistBadge">0</span>
@@ -80,9 +79,16 @@
                     <span class="icon">🛍</span>
                     <span class="badge" id="cartBadge">0</span>
                 </button>
-                <button class="nav-icon-btn" id="userBtn" onclick="openLoginModal()" title="Account">
-                    <span class="icon">👤</span>
-                </button>
+                <div class="account-dropdown-wrapper">
+                    <button class="nav-icon-btn account-btn" id="accountBtn" onclick="toggleAccountMenu()" title="Account">
+                        <span class="icon">👤</span>
+                    </button>
+                    <div class="account-dropdown" id="accountDropdown">
+                        <button onclick="navigateTo('account')">My Account</button>
+                        <button onclick="navigateTo('wishlist')">Saved Items</button>
+                        <button class="seller-access-link" onclick="navigateTo('seller-dashboard')">Seller Access</button>
+                    </div>
+                </div>
             </div>
 
             <button class="hamburger" onclick="toggleMobileMenu()">
@@ -99,56 +105,65 @@
         <section id="home" class="page active">
             <!-- MARKETPLACE HERO -->
             <section class="marketplace-hero">
-                <div class="marketplace-hero__panel">
-                    <div class="hero-pill-row">
-                        <span class="hero-pill">Multi-Vendor</span>
-                        <span class="hero-pill">Luxury Drops</span>
-                        <span class="hero-pill">Anime x Gaming</span>
-                    </div>
-                    <h1 class="marketplace-title">ANCRIO Marketplace</h1>
-                    <p class="marketplace-copy">A premium dark-luxury marketplace for anime, streetwear, sneakers, gaming drops and collectible vendor storefronts.</p>
+                <div class="hero-grid">
+                    <div class="hero-copy">
+                        <span class="hero-label">Personalized shopping, curated for you</span>
+                        <h1 class="marketplace-title">Discover products curated just for your style.</h1>
+                        <p class="marketplace-copy">A premium dark feed of anime picks, gaming essentials, streetwear drops and flash deals delivered like a modern marketplace stream.</p>
 
-                    <div class="hero-actions">
-                        <button class="btn-primary-large" onclick="navigateTo('shop')">Explore Marketplace</button>
-                        <button class="btn-secondary-large" onclick="navigateTo('seller-dashboard')">Become a Seller</button>
+                        <div class="hero-pill-row">
+                            <button class="hero-pill" onclick="scrollToSection('animeSlider')">Anime Picks</button>
+                            <button class="hero-pill" onclick="scrollToSection('gamingSlider')">Gaming Essentials</button>
+                            <button class="hero-pill" onclick="scrollToSection('streetwearSlider')">Streetwear Drops</button>
+                            <button class="hero-pill" onclick="scrollToSection('flashDealsSlider')">Flash Deals</button>
+                        </div>
 
-                    <div class="hero-metrics">
-                        <div>
-                            <strong>48K+</strong>
-                            <span>Verified sellers</span>
+                        <div class="hero-actions">
+                            <button class="btn-primary-large" onclick="navigateTo('shop')">Shop Your Feed</button>
+                            <button class="btn-secondary-large" onclick="navigateTo('new-arrivals')">Browse New Arrivals</button>
                         </div>
-                        <div>
-                            <strong>125K+</strong>
-                            <span>Curated listings</span>
-                        </div>
-                        <div>
-                            <strong>22M</strong>
-                            <span>Monthly views</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="marketplace-hero__visual">
-                    <div class="hero-visual-card">
-                        <div class="visual-badge">Premium Launch</div>
-                        <h2>Limited streetwear drops</h2>
-                        <p>Discover exclusive vendor collabs, collector editions, and premium drop experiences.</p>
-                        <div class="visual-stat-row">
-                            <span>Live bids</span>
-                            <strong>1.2K</strong>
+
+                        <div class="hero-metrics">
+                            <div>
+                                <strong>Feed-driven</strong>
+                                <span>Personalized product discovery</span>
+                            </div>
+                            <div>
+                                <strong>Live drops</strong>
+                                <span>Trending, curated, addictive</span>
+                            </div>
+                            <div>
+                                <strong>Style signal</strong>
+                                <span>Smart recommendations</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="hero-mini-grid">
-                        <div class="mini-card">
-                            <span>Anime</span>
-                            <strong>12K+</strong>
+                    <div class="hero-visual">
+                        <div class="hero-banner">
+                            <div class="banner-topline">Fresh for you</div>
+                            <h2>Luxury finds, streetwear vibes and anime energy</h2>
+                            <p>Dynamic sections refresh every visit with premium products, curated deals and algorithm-inspired layouts.</p>
+                            <div class="banner-stats">
+                                <div><strong>12</strong><span>New recommendations</span></div>
+                                <div><strong>4.9★</strong><span>Average shopper rating</span></div>
+                            </div>
                         </div>
-                        <div class="mini-card">
-                            <span>Gaming</span>
-                            <strong>9K+</strong>
-                        </div>
-                        <div class="mini-card">
-                            <span>Streetwear</span>
-                            <strong>8.5K+</strong>
+                        <div class="hero-cards">
+                            <div class="floating-card floating-card--big">
+                                <span>Anime Picks</span>
+                                <strong>Otaku Street Hoodie</strong>
+                                <p>Curated for your next drop.</p>
+                            </div>
+                            <div class="floating-card">
+                                <span>Gaming Essentials</span>
+                                <strong>Streamer Desk Kit</strong>
+                                <p>Upgrade your setup with premium gear.</p>
+                            </div>
+                            <div class="floating-card">
+                                <span>Streetwear Drops</span>
+                                <strong>Phantom Runner</strong>
+                                <p>Drop-ready looks for bold style.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -160,453 +175,134 @@
                 <div class="hotbar-chip">Streetwear</div>
                 <div class="hotbar-chip">Sneakers</div>
                 <div class="hotbar-chip">Accessories</div>
-                <div class="hotbar-chip">Posters</div>
-                <div class="hotbar-chip">Tech</div>
+                <div class="hotbar-chip">Drops</div>
+                <div class="hotbar-chip">Curated</div>
             </section>
 
-            <!-- TRENDING CATEGORIES -->
-            <section class="trending-categories section">
+            <section class="recommended-feed section">
                 <div class="section-headline">
                     <div>
-                        <h2 class="section-title">Trending Categories</h2>
-                        <p class="section-subtitle">Shop by culture, genre and premium marketplaces.</p>
+                        <h2 class="section-title">Recommended For You</h2>
+                        <p class="section-subtitle">A feed of products selected by your browsing behavior and trending signals.</p>
                     </div>
-                    <a href="#" onclick="navigateTo('collections')" class="view-all">See All Categories</a>
+                    <a href="#" onclick="navigateTo('shop')" class="view-all">Explore All Picks</a>
                 </div>
-                <div class="category-grid">
-                    <div class="category-card premium-category-card">
-                        <div class="category-icon">🌸</div>
-                        <h3>Anime</h3>
-                        <p>Epic collectibles and cosplay drops</p>
+                <div class="horizontal-scroll" id="recommendedSlider"></div>
+            </section>
+
+            <section class="trending-now section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Trending Now</h2>
+                        <p class="section-subtitle">Instantly shop what shoppers are adding to carts right now.</p>
                     </div>
-                    <div class="category-card premium-category-card">
-                        <div class="category-icon">🎮</div>
-                        <h3>Gaming</h3>
-                        <p>Exclusive gear, apparel and avatars</p>
+                    <a href="#" onclick="navigateTo('shop')" class="view-all">See Trending</a>
+                </div>
+                <div class="horizontal-scroll" id="trendingSlider"></div>
+            </section>
+
+            <section class="interest-feed section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Based On Your Interests</h2>
+                        <p class="section-subtitle">Personalized selections that match your style and favorite categories.</p>
                     </div>
-                    <div class="category-card premium-category-card">
-                        <div class="category-icon">🧢</div>
-                        <h3>Streetwear</h3>
-                        <p>Luxury drops and urban essentials</p>
+                    <a href="#" onclick="navigateTo('collections')" class="view-all">Discover More</a>
+                </div>
+                <div class="horizontal-scroll" id="interestSlider"></div>
+            </section>
+
+            <section class="theme-showcase section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Curated Themes</h2>
+                        <p class="section-subtitle">Quick access to the latest drops across anime, gaming and streetwear.</p>
                     </div>
-                    <div class="category-card premium-category-card">
-                        <div class="category-icon">👟</div>
-                        <h3>Sneakers</h3>
-                        <p>Limited edition kicks and collaborations</p>
+                    <a href="#" onclick="navigateTo('collections')" class="view-all">Browse Themes</a>
+                </div>
+                <div class="theme-grid">
+                    <div class="theme-card theme-card--anime">
+                        <h3>Anime Picks</h3>
+                        <p>Bold prints, collectible tees, and stylized street looks.</p>
                     </div>
-                    <div class="category-card premium-category-card">
-                        <div class="category-icon">✨</div>
-                        <h3>Accessories</h3>
-                        <p>Bold jewelry, bags & curated add-ons</p>
+                    <div class="theme-card theme-card--gaming">
+                        <h3>Gaming Essentials</h3>
+                        <p>Pro-ready gear, ambient accessories, and limited drops.</p>
                     </div>
-                    <div class="category-card premium-category-card">
-                        <div class="category-icon">🖼️</div>
-                        <h3>Posters</h3>
-                        <p>Art, anime prints and wall statement pieces</p>
-                    </div>
-                    <div class="category-card premium-category-card">
-                        <div class="category-icon">🔌</div>
-                        <h3>Tech</h3>
-                        <p>Gadget drops for streamers and gamers</p>
+                    <div class="theme-card theme-card--streetwear">
+                        <h3>Streetwear Drops</h3>
+                        <p>Premium layers, statement pieces, and cult favorites.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- FLASH DEALS SECTION -->
+            <section class="anime-picks section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Anime Picks</h2>
+                        <p class="section-subtitle">Curated outfits and accessories inspired by anime culture.</p>
+                    </div>
+                    <a href="#" onclick="navigateTo('collections')" class="view-all">Explore Anime</a>
+                </div>
+                <div class="horizontal-scroll" id="animeSlider"></div>
+            </section>
+
+            <section class="gaming-essentials section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Gaming Essentials</h2>
+                        <p class="section-subtitle">Level up with exclusive gear and premium gaming lifestyle picks.</p>
+                    </div>
+                    <a href="#" onclick="navigateTo('collections')" class="view-all">Shop Gaming</a>
+                </div>
+                <div class="horizontal-scroll" id="gamingSlider"></div>
+            </section>
+
+            <section class="streetwear-drops section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Streetwear Drops</h2>
+                        <p class="section-subtitle">Fresh looks for the city, designed for an addictive shopping experience.</p>
+                    </div>
+                    <a href="#" onclick="navigateTo('shop')" class="view-all">Shop Streetwear</a>
+                </div>
+                <div class="horizontal-scroll" id="streetwearSlider"></div>
+            </section>
+
+            <section class="recently-viewed section">
+                <div class="section-headline">
+                    <div>
+                        <h2 class="section-title">Recently Viewed</h2>
+                        <p class="section-subtitle">Pick up where you left off with items you explored most recently.</p>
+                    </div>
+                    <a href="#" onclick="navigateTo('shop')" class="view-all">Continue Browsing</a>
+                </div>
+                <div class="horizontal-scroll" id="recentlyViewedSlider"></div>
+            </section>
+
             <section class="flash-deals section">
                 <div class="section-headline">
                     <div>
                         <span class="flash-label">FLASH DEALS</span>
-                        <h2 class="section-title">Lightning Drops</h2>
-                        <p>Deals refresh every hour across top sellers and limited stock.</p>
+                        <h2 class="section-title">Flash Deals</h2>
+                        <p class="section-subtitle">Limited time offers, premium picks and instant savings.</p>
                     </div>
                     <div class="countdown-timer">
                         <span>03</span><span>18</span><span>42</span>
                     </div>
                 </div>
-                <div class="horizontal-scroll flash-slider">
-                    <div class="deal-card">
-                        <div class="deal-badge">-45%</div>
-                        <div class="deal-thumb">🎧</div>
-                        <h3>Cyber Soundset</h3>
-                        <p>Gaming audio pack from Tokyo vendor.</p>
-                        <strong>₹1,299</strong>
-                    </div>
-                    <div class="deal-card">
-                        <div class="deal-badge">-38%</div>
-                        <div class="deal-thumb">🎴</div>
-                        <h3>Anime Collector Tee</h3>
-                        <p>Limited run streetwear by Midnight Studio.</p>
-                        <strong>₹899</strong>
-                    </div>
-                    <div class="deal-card">
-                        <div class="deal-badge">-52%</div>
-                        <div class="deal-thumb">👾</div>
-                        <h3>Retro Arcade Hoodie</h3>
-                        <p>Exclusive drop from Urban Lab.</p>
-                        <strong>₹1,499</strong>
-                    </div>
-                    <div class="deal-card">
-                        <div class="deal-badge">-30%</div>
-                        <div class="deal-thumb">💨</div>
-                        <h3>Sneaker Glow Kit</h3>
-                        <p>Premium streetwear accessory pack.</p>
-                        <strong>₹599</strong>
-                    </div>
-                </div>
+                <div class="horizontal-scroll flash-slider" id="flashDealsSlider"></div>
             </section>
 
-            <!-- FEATURED PRODUCTS -->
-            <section class="featured-products section">
-                <div class="section-headline">
-                    <div>
-                        <h2 class="section-title">Featured Drops</h2>
-                        <p>Curated vendor collections selected by ANCRIO editors.</p>
-                    </div>
-                    <a href="#" onclick="navigateTo('shop')" class="view-all">Browse All Products</a>
-                </div>
-                <div class="products-grid">
-                    <div class="product-card premium-product-card">
-                        <div class="product-image">
-                            <div class="hover-overlay"></div>
-                            <span>🎒</span>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-meta">
-                                <span class="vendor-name">Tokyo Vault</span>
-                                <span class="discount-badge">-30%</span>
-                            </div>
-                            <h3 class="product-name">Neo Street Pack</h3>
-                            <div class="product-rating">★★★★☆ <span>(320)</span></div>
-                            <div class="product-price">
-                                <span>₹2,199</span>
-                                <small>₹3,149</small>
-                            </div>
-                            <div class="product-actions">
-                                <button>Add to Cart</button>
-                                <button class="wish-btn">♡</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card premium-product-card">
-                        <div class="product-image">
-                            <div class="hover-overlay"></div>
-                            <span>🖤</span>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-meta">
-                                <span class="vendor-name">Midnight Forge</span>
-                                <span class="discount-badge">-25%</span>
-                            </div>
-                            <h3 class="product-name">Holo Armor Jacket</h3>
-                            <div class="product-rating">★★★★☆ <span>(210)</span></div>
-                            <div class="product-price">
-                                <span>₹4,199</span>
-                                <small>₹5,599</small>
-                            </div>
-                            <div class="product-actions">
-                                <button>Add to Cart</button>
-                                <button class="wish-btn">♡</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card premium-product-card">
-                        <div class="product-image">
-                            <div class="hover-overlay"></div>
-                            <span>🎮</span>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-meta">
-                                <span class="vendor-name">Pixel Punks</span>
-                                <span class="discount-badge">-20%</span>
-                            </div>
-                            <h3 class="product-name">Core Gamer Hoodie</h3>
-                            <div class="product-rating">★★★★☆ <span>(460)</span></div>
-                            <div class="product-price">
-                                <span>₹1,799</span>
-                                <small>₹2,249</small>
-                            </div>
-                            <div class="product-actions">
-                                <button>Add to Cart</button>
-                                <button class="wish-btn">♡</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card premium-product-card">
-                        <div class="product-image">
-                            <div class="hover-overlay"></div>
-                            <span>👟</span>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-meta">
-                                <span class="vendor-name">Sneak Vault</span>
-                                <span class="discount-badge">-18%</span>
-                            </div>
-                            <h3 class="product-name">Phantom Runner</h3>
-                            <div class="product-rating">★★★★☆ <span>(510)</span></div>
-                            <div class="product-price">
-                                <span>₹3,299</span>
-                                <small>₹4,049</small>
-                            </div>
-                            <div class="product-actions">
-                                <button>Add to Cart</button>
-                                <button class="wish-btn">♡</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- MARKETPLACE ARCHITECTURE -->
-            <section class="marketplace-architecture section">
-                <div class="section-headline">
-                    <div>
-                        <h2 class="section-title">Marketplace Architecture</h2>
-                        <p class="section-subtitle">Designed for sellers, admins, shoppers and a scalable multi-vendor future.</p>
-                    </div>
-                </div>
-                <div class="architecture-grid">
-                    <div class="architecture-card">
-                        <h3>Seller Dashboard</h3>
-                        <p>Vendor onboarding, inventory control, analytics and premium storefronts.</p>
-                    </div>
-                    <div class="architecture-card">
-                        <h3>Admin Control</h3>
-                        <p>Marketplace moderation, featured drops, flash sales and vendor management.</p>
-                    </div>
-                    <div class="architecture-card">
-                        <h3>Customer Accounts</h3>
-                        <p>Personalized recommendations, wishlist, order tracking and premium loyalty rewards.</p>
-                    </div>
-                    <div class="architecture-card">
-                        <h3>Multi-Vendor Products</h3>
-                        <p>Vendor catalogs, collection tags, ratings and unified cart experience.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SELLER DASHBOARD PREVIEW -->
-            <section class="seller-dashboard-preview section">
-                <div class="section-headline">
-                    <div>
-                        <h2 class="section-title">Seller Dashboard Preview</h2>
-                        <p class="section-subtitle">Premium vendor analytics, order control and growth tools for the ANCRIO marketplace.</p>
-                    </div>
-<button class="seller-cta" onclick="navigateTo('seller-dashboard')">Become a Seller</button>
-                </div>
-
-                <div class="dashboard-grid">
-                    <div class="dashboard-main-card dashboard-card">
-                        <div class="dashboard-card-head">
-                            <div>
-                                <span class="dashboard-label">Total Earnings</span>
-                                <h3>₹18.4L</h3>
-                            </div>
-                            <span class="dashboard-pill">Live</span>
-                        </div>
-                        <div class="dashboard-stats-row">
-                            <div class="dashboard-small-card">
-                                <span>Total Orders</span>
-                                <strong>3,240</strong>
-                            </div>
-                            <div class="dashboard-small-card">
-                                <span>Product Uploads</span>
-                                <strong>128</strong>
-                            </div>
-                            <div class="dashboard-small-card">
-                                <span>Store Followers</span>
-                                <strong>21.2K</strong>
-                            </div>
-                        </div>
-                        <div class="analytics-panel">
-                            <div class="analytics-header">
-                                <div>
-                                    <span class="dashboard-label">Monthly Revenue</span>
-                                    <h4>₹4.2L</h4>
-                                </div>
-                                <span class="analytics-change">+24.8%</span>
-                            </div>
-                            <div class="analytics-chart">
-                                <span style="--level:0.35"></span>
-                                <span style="--level:0.55"></span>
-                                <span style="--level:0.7"></span>
-                                <span style="--level:0.5"></span>
-                                <span style="--level:0.9"></span>
-                                <span style="--level:0.65"></span>
-                                <span style="--level:0.8"></span>
-                            </div>
-                            <div class="analytics-meta-row">
-                                <div><strong>Pending Orders</strong><span>68</span></div>
-                                <div><strong>Notifications</strong><span>12</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-side-cards">
-                        <div class="dashboard-card notification-card">
-                            <div class="dashboard-card-head">
-                                <span class="dashboard-label">Notifications</span>
-                                <span class="notification-badge">12</span>
-                            </div>
-                            <div class="notification-list">
-                                <div>New seller application approved</div>
-                                <div>Flash drop ready in 2 hours</div>
-                                <div>Inventory low for Phantom Runner</div>
-                            </div>
-                        </div>
-                        <div class="dashboard-card features-card">
-                            <span class="dashboard-label">Seller Feature Highlights</span>
-                            <div class="feature-list">
-                                <div class="feature-pill">Upload Products</div>
-                                <div class="feature-pill">Earn Commissions</div>
-                                <div class="feature-pill">Manage Orders</div>
-                                <div class="feature-pill">Track Analytics</div>
-                                <div class="feature-pill">Featured Promotions</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TOP SELLERS SECTION -->
-            <section class="top-sellers section">
-                <div class="section-headline">
-                    <div>
-                        <h2 class="section-title">Top Sellers</h2>
-                        <p>High-performance boutiques driving premium marketplace traffic.</p>
-                    </div>
-                    <a href="#" onclick="navigateTo('shop')" class="view-all">View Seller Hubs</a>
-                </div>
-                <div class="seller-grid">
-                    <div class="seller-card">
-                        <div class="seller-banner">AN</div>
-                        <div class="seller-content">
-                            <h3>Tokyo Vault</h3>
-                            <p>Anime streetwear and collectible drops.</p>
-                            <div class="seller-stats">
-                                <span>4.9 ★</span>
-                                <span>18.4K followers</span>
-                                <span>120 products</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="seller-card">
-                        <div class="seller-banner">GX</div>
-                        <div class="seller-content">
-                            <h3>Galactic X</h3>
-                            <p>Premium gaming apparel and limited gear.</p>
-                            <div class="seller-stats">
-                                <span>4.8 ★</span>
-                                <span>14.2K followers</span>
-                                <span>98 products</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="seller-card">
-                        <div class="seller-banner">SV</div>
-                        <div class="seller-content">
-                            <h3>Sneak Vault</h3>
-                            <p>Rare kicks and premium sneaker drops.</p>
-                            <div class="seller-stats">
-                                <span>4.9 ★</span>
-                                <span>16.9K followers</span>
-                                <span>84 products</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="seller-card">
-                        <div class="seller-banner">MN</div>
-                        <div class="seller-content">
-                            <h3>Midnight Forge</h3>
-                            <p>Luxury streetwear and collectible fashion.</p>
-                            <div class="seller-stats">
-                                <span>4.7 ★</span>
-                                <span>11.3K followers</span>
-                                <span>76 products</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- RECOMMENDED PRODUCTS -->
-            <section class="recommended-products section">
-                <div class="section-headline">
-                    <div>
-                        <h2 class="section-title">Recommended for You</h2>
-                        <p>AI-powered product suggestions based on the latest marketplace trends.</p>
-                    </div>
-                    <a href="#" onclick="navigateTo('shop')" class="view-all">Explore Recommendations</a>
-                </div>
-                <div class="products-grid">
-                    <div class="product-card recommended-card">
-                        <div class="product-image"><span>🛡️</span></div>
-                        <div class="product-info">
-                            <h3 class="product-name">Specter Armor Tee</h3>
-                            <div class="product-meta"><span class="vendor-name">Ghostline</span><span class="discount-badge">-28%</span></div>
-                            <div class="product-price"><span>₹1,199</span><small>₹1,669</small></div>
-                        </div>
-                    </div>
-                    <div class="product-card recommended-card">
-                        <div class="product-image"><span>🧬</span></div>
-                        <div class="product-info">
-                            <h3 class="product-name">Neo Synth Jacket</h3>
-                            <div class="product-meta"><span class="vendor-name">Circuit Threads</span><span class="discount-badge">-22%</span></div>
-                            <div class="product-price"><span>₹2,499</span><small>₹3,199</small></div>
-                        </div>
-                    </div>
-                    <div class="product-card recommended-card">
-                        <div class="product-image"><span>🕶️</span></div>
-                        <div class="product-info">
-                            <h3 class="product-name">Shadow Runner Cap</h3>
-                            <div class="product-meta"><span class="vendor-name">Night Shift</span><span class="discount-badge">-15%</span></div>
-                            <div class="product-price"><span>₹749</span><small>₹879</small></div>
-                        </div>
-                    </div>
-                    <div class="product-card recommended-card">
-                        <div class="product-image"><span>📱</span></div>
-                        <div class="product-info">
-                            <h3 class="product-name">Streamer Desk Kit</h3>
-                            <div class="product-meta"><span class="vendor-name">Pulse Labs</span><span class="discount-badge">-34%</span></div>
-                            <div class="product-price"><span>₹3,499</span><small>₹5,299</small></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- NEW ARRIVALS SECTION -->
             <section class="new-arrivals section">
                 <div class="section-headline">
                     <div>
                         <h2 class="section-title">New Arrivals</h2>
-                        <p>Fresh drops from top vendors and limited edition releases.</p>
+                        <p class="section-subtitle">Fresh drops from top vendors and collections just landed.</p>
                     </div>
                     <a href="#" onclick="navigateTo('new-arrivals')" class="view-all">See New Arrivals</a>
                 </div>
                 <div class="horizontal-scroll arrivals-slider" id="newArrivalsGrid"></div>
-            </section>
-
-            <!-- GAMING & ANIME COLLECTIONS -->
-            <section class="collection-showcase section">
-                <div class="section-headline">
-                    <div>
-                        <h2 class="section-title">Gaming & Anime Collections</h2>
-                        <p>Immersive banners for the latest curated collections.</p>
-                    </div>
-                    <a href="#" onclick="navigateTo('collections')" class="view-all">View Collections</a>
-                </div>
-                <div class="collection-grid">
-                    <div class="collection-card collection-card--anime">
-                        <div class="collection-overlay"></div>
-                        <h3>Otaku Street</h3>
-                        <p>Bold anime fashion and character drops.</p>
-                    </div>
-                    <div class="collection-card collection-card--gaming">
-                        <div class="collection-overlay"></div>
-                        <h3>Battle Ready</h3>
-                        <p>Gaming-inspired apparel, limited accessories and gear.</p>
-                    </div>
-                </div>
             </section>
         </section>
 
@@ -1473,6 +1169,7 @@
                     <li><a href="#" onclick="navigateTo('new-arrivals')">New Arrivals</a></li>
                     <li><a href="#" onclick="navigateTo('collections')">Collections</a></li>
                     <li><a href="#" onclick="navigateTo('story')">Our Story</a></li>
+                    <li><a href="#" onclick="navigateTo('seller-dashboard')">Seller Access</a></li>
                 </ul>
             </div>
 

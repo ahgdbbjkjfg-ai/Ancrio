@@ -9,6 +9,7 @@ const products = [
         name: 'Premium Black T-Shirt',
         category: 't-shirts',
         collection: 'casual',
+        tags: ['casual', 'streetwear'],
         price: 799,
         originalPrice: 999,
         image: '👕',
@@ -37,6 +38,7 @@ const products = [
         name: 'Luxury Hoodie - Black',
         category: 'hoodies',
         collection: 'casual',
+        tags: ['streetwear', 'gaming'],
         price: 1399,
         originalPrice: 1799,
         image: '🖤',
@@ -51,6 +53,7 @@ const products = [
         name: 'Gray Hoodie Collection',
         category: 'hoodies',
         collection: 'sporty',
+        tags: ['gaming', 'streetwear'],
         price: 1299,
         originalPrice: 1699,
         image: '🩶',
@@ -65,6 +68,7 @@ const products = [
         name: 'Elegant Denim Jacket',
         category: 'jackets',
         collection: 'formal',
+        tags: ['streetwear'],
         price: 1999,
         originalPrice: 2599,
         image: '🧥',
@@ -135,6 +139,7 @@ const products = [
         name: 'Canvas Sneakers',
         category: 'accessories',
         collection: 'casual',
+        tags: ['streetwear', 'sneakers'],
         price: 1199,
         originalPrice: 1599,
         image: '👟',
@@ -149,6 +154,7 @@ const products = [
         name: 'Premium Poster - Fashion',
         category: 'accessories',
         collection: 'casual',
+        tags: ['anime', 'decor'],
         price: 499,
         originalPrice: 699,
         image: '🖼️',
@@ -163,6 +169,7 @@ const products = [
         name: 'Designer Backpack',
         category: 'accessories',
         collection: 'sporty',
+        tags: ['gaming', 'streetwear'],
         price: 1799,
         originalPrice: 2399,
         image: '🎒',
@@ -434,7 +441,7 @@ document.addEventListener('mousemove', (e) => {
 // Initialize App
 function initializeApp() {
     buildMarketplaceProducts();
-    renderNewArrivals();
+    renderHomeSections();
     renderShopGrid();
     updateCartBadge();
     updateWishlistBadge();
@@ -489,6 +496,87 @@ function buildMarketplaceProducts() {
             createdAt: p.createdAt || new Date().toLocaleDateString('en-IN')
         }))
     ];
+}
+
+function toggleAccountMenu() {
+    const accountDropdown = document.getElementById('accountDropdown');
+    if (!accountDropdown) return;
+
+    if (!currentUser) {
+        openLoginModal();
+        return;
+    }
+
+    accountDropdown.classList.toggle('active');
+}
+
+document.addEventListener('click', event => {
+    const accountDropdown = document.getElementById('accountDropdown');
+    const accountBtn = document.getElementById('accountBtn');
+    if (!accountDropdown || !accountBtn) return;
+
+    if (!accountDropdown.contains(event.target) && !accountBtn.contains(event.target)) {
+        accountDropdown.classList.remove('active');
+    }
+});
+
+function rankProductsForFeed(productsList) {
+    return productsList
+        .map(p => ({
+            ...p,
+            _feedScore: (p.rating || 4) * 14 + (p.soldCount || 20) * 0.05 + (p.isNew ? 18 : 0)
+        }))
+        .sort((a, b) => b._feedScore - a._feedScore);
+}
+
+function getRecommendedProducts() {
+    return rankProductsForFeed(products).slice(0, 8);
+}
+
+function getTrendingProducts() {
+    const trendingItems = products.filter(p => p.isNew || (p.tags || []).includes('streetwear') || (p.tags || []).includes('gaming'));
+    return rankProductsForFeed(trendingItems.length ? trendingItems : products).slice(0, 8);
+}
+
+function getInterestProducts() {
+    const interestTags = JSON.parse(localStorage.getItem('ancrioInterestTags') || '["anime","gaming","streetwear"]');
+    const interestItems = products.filter(p => (p.tags || []).some(tag => interestTags.includes(tag)) || interestTags.includes(p.category));
+    return rankProductsForFeed(interestItems.length ? interestItems : products).slice(0, 8);
+}
+
+function getCategoryProducts(categoryTag) {
+    const items = products.filter(p => (p.tags || []).includes(categoryTag) || p.category === categoryTag || p.collection === categoryTag);
+    return rankProductsForFeed(items.length ? items : products).slice(0, 8);
+}
+
+function getFlashDeals() {
+    const items = products.filter(p => p.originalPrice && p.originalPrice > p.price);
+    return rankProductsForFeed(items).slice(0, 8);
+}
+
+function getRecentlyViewedProducts() {
+    const ids = JSON.parse(localStorage.getItem('ancrioRecentlyViewed') || '[]');
+    const items = ids.map(id => products.find(p => p.id === id)).filter(Boolean);
+    return items.length ? items : getRecommendedProducts().slice(0, 6);
+}
+
+function renderProductSlider(containerId, items) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = '';
+    items.forEach(item => container.appendChild(createProductCard(item)));
+}
+
+function renderHomeSections() {
+    renderProductSlider('recommendedSlider', getRecommendedProducts());
+    renderProductSlider('trendingSlider', getTrendingProducts());
+    renderProductSlider('interestSlider', getInterestProducts());
+    renderProductSlider('animeSlider', getCategoryProducts('anime'));
+    renderProductSlider('gamingSlider', getCategoryProducts('gaming'));
+    renderProductSlider('streetwearSlider', getCategoryProducts('streetwear'));
+    renderProductSlider('recentlyViewedSlider', getRecentlyViewedProducts());
+    renderProductSlider('flashDealsSlider', getFlashDeals());
+    renderNewArrivals();
 }
 
 // Load data from localStorage
@@ -559,6 +647,8 @@ function navigateTo(page) {
             return;
         }
         renderAccount();
+    } else if (page === 'home') {
+        renderHomeSections();
     } else if (page === 'admin') {
         // Reload data from storage to ensure we have latest orders
         loadFromStorage();
@@ -574,6 +664,12 @@ function navigateTo(page) {
     // Close mobile menu
     const navMenu = document.querySelector('.nav-menu');
     if (navMenu) navMenu.classList.remove('active');
+}
+
+function scrollToSection(id) {
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function showSellerPanel(panel) {
@@ -1209,6 +1305,10 @@ function openProductDetail(productId) {
     currentProductId = productId;
     const product = products.find(p => p.id === productId);
     
+    const recentlyViewed = JSON.parse(localStorage.getItem('ancrioRecentlyViewed') || '[]');
+    const updatedViewed = [productId, ...recentlyViewed.filter(id => id !== productId)].slice(0, 12);
+    localStorage.setItem('ancrioRecentlyViewed', JSON.stringify(updatedViewed));
+
     if (!product) return;
 
     const detailImage = document.getElementById('detailImage');
